@@ -1,0 +1,100 @@
+/* Tailwind CSS */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* Layers */
+
+@layer base{
+    *{
+        @apply
+            m-0
+            p-0
+            flex-grow-0
+            flex-shrink-0
+            outline-none
+            border-none
+            text-color-4;
+    }
+
+    :root{
+        --width-main: 64rem;
+
+        --height-header: calc(6rem - 1px);
+        --height-torso: calc(100vh - var(--height-header));
+
+        --color-1: #020617;
+        --color-2: #0f172a;
+        --color-3: #1e293b;
+        --color-4: #fff;
+        --color-accent: #4338ca;
+        --color-danger: #dc2626;
+        --color-warn: #facc15;
+        --color-safe: #16a34a;
+        --color-glass: rgba(255, 255, 255, .1);
+
+        --line-height-fit: normal;
+
+        --border-radius-default: 4px;
+    }
+}
+
+@layer components{
+    .styled-text-field,
+    .styled-dropdown{
+        @apply
+            px-4
+            py-2
+            text-lg
+            border
+            border-glass
+            border-solid
+            outline
+            outline-2
+            outline-transparent
+            -outline-offset-1
+            focus:outline-accent
+            rounded-default
+            bg-transparent
+            transition-all;
+    }
+}
+
+@layer utilities{
+    .outline-on-focus{
+        @apply
+            outline
+            outline-2
+            outline-transparent
+            focus:outline-accent;
+    }
+
+    .responsive{
+        @apply
+            w-main
+            mx-auto
+            px-4
+            max-w-full;
+    }
+
+    .skeleton{
+        @apply rounded-default;
+        
+        animation: skeleton 1s ease-in-out 0s infinite;
+    }
+
+    @keyframes skeleton{
+        0%{
+            background: var(--color-glass);
+        }
+        50%{
+            background: var(--color-3);
+        }
+        100%{
+            background: var(--color-glass);
+        }
+    }
+}
