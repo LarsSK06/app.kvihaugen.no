@@ -5,7 +5,7 @@ import "@/utils/css/globals.css";
 import { IParentProps } from "@/utils/types";
 import { Metadata } from "next";
 
-import Header from "@/components/Header";
+import Header from "@/components/shared/Header";
 
 
 
