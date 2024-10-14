@@ -4,6 +4,7 @@
 
 // Imports
 
+import { t } from "@/utils/i18n";
 import { useParams } from "next/navigation";
 
 
@@ -15,8 +16,11 @@ export default (): React.ReactNode => {
     const { id } = useParams();
 
     return(
-        <div className="w-full h-full">
-            {id}
-        </div>
+        <form className="w-full h-full p-4">
+            <label htmlFor="name">
+                {t("Name")}
+            </label>
+            <input id="name" name="name" className="styled-text-field"/>
+        </form>
     );
 };

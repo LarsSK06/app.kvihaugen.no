@@ -1,0 +1,1 @@
+PhilipsHueUser = string

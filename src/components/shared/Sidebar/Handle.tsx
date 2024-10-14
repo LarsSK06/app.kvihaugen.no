@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 // Types
 
 interface IProps{
+    clientLeft?: number;
     width: number;
     minWidth: number;
     maxWidth: number;
@@ -17,7 +18,7 @@ interface IProps{
 
 // Component
 
-export default ({ width, minWidth, maxWidth, setWidth }: IProps): React.ReactNode => {
+export default ({ clientLeft = 0, width, minWidth, maxWidth, setWidth }: IProps): React.ReactNode => {
 
     const [dragging, setDragging] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
@@ -28,10 +29,10 @@ export default ({ width, minWidth, maxWidth, setWidth }: IProps): React.ReactNod
         function onMouseMove(event: MouseEvent): void{
             if(!dragging) return;
 
-            const targetWidth: number = width + event.movementX;
+            let targetWidth: number = clientLeft + event.clientX;
 
-            if(targetWidth <= minWidth) return setDragging(false);
-            if(targetWidth >= maxWidth) return setDragging(false);
+            targetWidth = Math.min(targetWidth, maxWidth);
+            targetWidth = Math.max(targetWidth, minWidth);
 
             setWidth(targetWidth);
         }
@@ -103,7 +104,7 @@ export default ({ width, minWidth, maxWidth, setWidth }: IProps): React.ReactNod
             <div
                 className="h-full mx-auto bg-accent transition-all"
                 style={{
-                    width: focused || hovered
+                    width: focused || hovered || dragging
                         ? "100%"
                         : 0
                 }}

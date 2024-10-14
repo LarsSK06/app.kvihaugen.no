@@ -1,6 +1,6 @@
 // Imports
 
-import { AFunc, BaseURL, HTTPMethod } from "../types";
+import { Address, AFunc, HTTPMethod } from "../types";
 import { useState } from "react";
 
 
@@ -33,7 +33,7 @@ export function useFetch<Receive, Send = undefined>(endpoint: string, { method =
 
         try{
             const response: globalThis.Response =
-                await fetch([BaseURL.Development, endpoint].join("/"), {
+                await fetch("http://" + [Address.Backend, endpoint].join("/"), {
                     method,
                     headers: {
                         authorization: `Bearer ${ null }`

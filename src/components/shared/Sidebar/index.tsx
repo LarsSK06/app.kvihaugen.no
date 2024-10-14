@@ -5,7 +5,7 @@
 // Imports
 
 import { IParentProps } from "@/utils/types";
-import { useState } from "react";
+import { MutableRefObject, useRef, useState } from "react";
 
 import Handle from "./Handle";
 
@@ -27,12 +27,16 @@ export default ({ initialWidth = 300, minWidth = 200, maxWidth = 400, children }
 
     const [width, setWidth] = useState<number>(initialWidth);
 
+    const aside: MutableRefObject<HTMLElement | null> = useRef<HTMLElement>(null);
+
     return (
         <aside
             className="h-full relative border-r border-r-glass border-solid"
             style={{ width }}
+            ref={aside}
         >
             <Handle
+                clientLeft={aside.current?.clientLeft}
                 width={width}
                 minWidth={minWidth}
                 maxWidth={maxWidth}
