@@ -15,7 +15,7 @@ export default (): React.ReactNode => {
 
     const { id } = useParams();
 
-    return(
+    return (
         <form className="w-full h-full p-4">
             <label htmlFor="name">
                 {t("Name")}

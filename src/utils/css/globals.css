@@ -97,4 +97,17 @@
             background: var(--color-glass);
         }
     }
+
+    .spin{
+        animation: spin 1s linear 0s infinite;
+    }
+
+    @keyframes spin{
+        0%{
+            rotate: 0deg;
+        }
+        100%{
+            rotate: 360deg;
+        }
+    }
 }

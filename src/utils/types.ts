@@ -41,8 +41,9 @@ export enum HTTPMethod{
     OPTIONS = "OPTIONS"
 }
 
-export enum Address{
-    Backend = "127.0.0.1:4000"
+export enum BackendAddress{
+    Localhost = "127.0.0.1:4000",
+    Local = "server.local:4000"
 }
 
 export enum GlobalState{
