@@ -26,7 +26,7 @@ export default ({ avatar, name }: IProps): React.ReactNode => {
     const route: UseAnchorRouterFunction = useAnchorRouter();
 
     return (
-        <a href="/user/@me" onClick={route} onMouseDown={preventDefault} className="w-fit h-fit flex gap-2 justify-start items-center group rounded-default transition-all outline-on-focus">
+        <a href="/users/@me" onClick={route} onMouseDown={preventDefault} className="w-fit h-fit flex gap-2 justify-start items-center group rounded-default transition-all outline-on-focus">
             {avatar ? (
                 <img
                     alt={t("Your avatar")}
