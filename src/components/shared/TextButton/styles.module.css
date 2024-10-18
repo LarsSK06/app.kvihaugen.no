@@ -1,0 +1,21 @@
+.button{
+    @apply
+        p-2
+        border
+        border-solid
+        border-glass
+        rounded-default
+        text-xl
+        outline
+        outline-4
+        outline-transparent
+        -outline-offset-1
+        focus:outline-accent
+        hover:outline-accent
+        bg-transparent
+        transition-all;
+}
+
+.span{
+    @apply text-xl;
+}

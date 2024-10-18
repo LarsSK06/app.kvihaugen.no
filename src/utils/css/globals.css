@@ -63,6 +63,15 @@
 }
 
 @layer utilities{
+    .box{
+        @apply
+            p-2
+            border
+            border-glass
+            border-solid
+            rounded-default;
+    }
+
     .outline-on-focus{
         @apply
             outline

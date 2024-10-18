@@ -28,6 +28,10 @@ div:has(input:focus, input:not(:placeholder-shown))
         transition-all;
 }
 
+.input:invalid{
+    @apply outline-danger;
+}
+
 .input::placeholder{
     color: rgba(255, 255, 255, .5);
 }

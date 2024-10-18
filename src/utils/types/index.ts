@@ -1,5 +1,9 @@
 // Interfaces
 
+export interface IAny<T = any>{
+    [key: string | number]: T;
+}
+
 export interface IParentProps<T = React.ReactNode>{
     children?: T;
 }
@@ -18,7 +22,7 @@ export enum HTTPMethod{
 }
 
 export enum BackendAddress{
-    Localhost = "127.0.0.1:4000",
+    Localhost = "localhost:5265",
     Local = "server.local:4000"
 }
 
