@@ -16,7 +16,7 @@ div:has(input:focus, input:not(:placeholder-shown))
         p-2
         border
         border-solid
-        border-glass
+        border-color-2
         rounded-default
         text-xl
         outline

@@ -31,7 +31,7 @@ export default ({ initialWidth = 300, minWidth = 200, maxWidth = 400, children }
 
     return (
         <aside
-            className="h-full relative border-r border-r-glass border-solid"
+            className="h-full relative border-r border-r-color-2 border-solid"
             style={{ width }}
             ref={aside}
         >

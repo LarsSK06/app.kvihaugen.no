@@ -5,8 +5,18 @@ export interface IUserListFilters{
     admin?: boolean;
 }
 
-export interface IGetUser{
-    id: string;
+export interface IPublicUser extends IPublicUserEmbed{
+    loans: {}[];
+}
+
+export interface IPublicUserEmbed{
+    id: number;
+    name: string;
+    email: string;
+    admin: boolean;
+}
+
+export interface IMutableUser{
     name: string;
     password: string;
     email: string;

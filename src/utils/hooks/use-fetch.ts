@@ -40,9 +40,6 @@ export function useFetch<Receive, Send = undefined>(endpoint: string, { method =
                     endpoint
                 ].join("/"), {
                     method,
-                    headers: {
-                        authorization: `Bearer ${ null }`
-                    },
                     body: body as BodyInit
                 });
             

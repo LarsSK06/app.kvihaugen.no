@@ -34,7 +34,7 @@
         --color-danger: #dc2626;
         --color-warn: #facc15;
         --color-safe: #16a34a;
-        --color-glass: rgba(255, 255, 255, .1);
+        --color-glass: rgba(255, 255, 255, .03);
 
         --line-height-fit: normal;
 
@@ -49,7 +49,7 @@
             p-2
             text-lg
             border
-            border-glass
+            border-color-2
             border-solid
             outline
             outline-2
@@ -67,7 +67,7 @@
         @apply
             p-2
             border
-            border-glass
+            border-color-2
             border-solid
             rounded-default;
     }

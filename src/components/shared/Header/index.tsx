@@ -14,7 +14,7 @@ export default (): React.ReactNode => {
     //const [user, setUser] = useState<{}>();
 
     return (
-        <header className="h-header border-b border-b-glass border-solid">
+        <header className="h-header border-b border-b-color-2 border-solid">
             <div className="responsive h-full flex justify-between items-center">
                 <Navigation/>
                 {/*<Profile

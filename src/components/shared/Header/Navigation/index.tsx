@@ -14,8 +14,8 @@ export default (): React.ReactNode => (
             <Button href="/">
                 {t("Home")}
             </Button>
-            <Button href="/light">
-                {t("Light")}
+            <Button href="/users">
+                {t("Users")}
             </Button>
         </ul>
     </nav>
