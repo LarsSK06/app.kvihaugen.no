@@ -1,9 +1,8 @@
 // Imports
 
-import TextField from "@/components/shared/TextField";
-
 import { t } from "@/utils/i18n";
 import { IUserListFilters } from "@/utils/types/users";
+import { TextField } from "@mui/material";
 
 
 
@@ -32,9 +31,7 @@ export default ({ filters, setFilters }: IProps): React.ReactNode => {
     return (
         <form className="py-4">
             <TextField
-                label={t("Search")}
-                placeholder={t("Search") + "..."}
-                onChange={onSearchChange}
+                placeholder={t("Search")}
             />
         </form>
     );

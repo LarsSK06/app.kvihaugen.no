@@ -22,9 +22,11 @@
 
     :root{
         --width-main: 64rem;
+        --width-vp: 100vw;
 
         --height-header: calc(6rem - 1px);
         --height-torso: calc(100vh - var(--height-header));
+        --height-vp: 100vh;
 
         --color-1: #020617;
         --color-2: #0f172a;
@@ -42,26 +44,6 @@
     }
 }
 
-@layer components{
-    .styled-text-field,
-    .styled-dropdown{
-        @apply
-            p-2
-            text-lg
-            border
-            border-color-2
-            border-solid
-            outline
-            outline-2
-            outline-transparent
-            -outline-offset-1
-            focus:outline-accent
-            rounded-default
-            bg-transparent
-            transition-all;
-    }
-}
-
 @layer utilities{
     .box{
         @apply
@@ -70,14 +52,6 @@
             border-color-2
             border-solid
             rounded-default;
-    }
-
-    .outline-on-focus{
-        @apply
-            outline
-            outline-2
-            outline-transparent
-            focus:outline-accent;
     }
 
     .responsive{

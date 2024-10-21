@@ -6,6 +6,7 @@ import { IParentProps } from "@/utils/types";
 import { Metadata } from "next";
 
 import Header from "@/components/shared/Header";
+import MuiThemeProvider from "@/components/shared/MuiThemeProvider";
 
 
 
@@ -20,13 +21,13 @@ export const metadata: Metadata = {
 
 // Component
 
-export default ({ children }: IParentProps): React.ReactNode => {
-    return (
+export default ({ children }: IParentProps): React.ReactNode => (
+    <MuiThemeProvider>
         <html lang="en">
             <body className="bg-color-1">
                 <Header/>
                 {children}
             </body>
         </html>
-    );
-};
+    </MuiThemeProvider>
+);

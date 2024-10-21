@@ -13,7 +13,7 @@ export function preventDefault(event: React.SyntheticEvent): void{
 export function crossMatch<T>(a: T[], b: T[]): number{
     return a
         .filter((i: T): boolean => b.includes(i))
-        .length
+        .length;
 }
 
 export function formDataToJSON<T>(formData: FormData): T{

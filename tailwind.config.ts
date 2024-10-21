@@ -5,11 +5,13 @@ const config: Config = {
     theme: {
         extend: {
             width: {
-                "main": "var(--width-main)"
+                "main": "var(--width-main)",
+                "vp": "var(--width-vp)"
             },
             height: {
                 "header": "var(--height-header)",
-                "torso": "var(--height-torso)"
+                "torso": "var(--height-torso)",
+                "vp": "var(--height-vp)"
             },
             colors: {
                 "color-1": "var(--color-1)",
@@ -32,4 +34,5 @@ const config: Config = {
     },
     plugins: []
 };
+
 export default config;

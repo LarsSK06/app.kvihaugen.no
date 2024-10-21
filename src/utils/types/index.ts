@@ -22,8 +22,8 @@ export enum HTTPMethod{
 }
 
 export enum BackendAddress{
-    Localhost = "localhost:5265",
-    Local = "server.local:4000"
+    Dev = "localhost:4000",
+    Prod = "server.local:4000"
 }
 
 export enum GlobalState{

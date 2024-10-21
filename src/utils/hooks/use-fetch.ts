@@ -35,8 +35,8 @@ export function useFetch<Receive, Send = undefined>(endpoint: string, { method =
             const response: globalThis.Response =
                 await fetch("http://" + [
                     process.env.NODE_ENV == "production"
-                        ? BackendAddress.Local
-                        : BackendAddress.Localhost,
+                        ? BackendAddress.Prod
+                        : BackendAddress.Dev,
                     endpoint
                 ].join("/"), {
                     method,
