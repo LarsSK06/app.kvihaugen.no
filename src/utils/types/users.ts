@@ -2,14 +2,10 @@
 
 export interface IUserListFilters{
     search?: string;
-    admin?: boolean;
+    type?: UserType;
 }
 
-export interface IPublicUser extends IPublicUserEmbed{
-    loans: {}[];
-}
-
-export interface IPublicUserEmbed{
+export interface IPublicUser{
     id: number;
     name: string;
     email: string;
@@ -24,6 +20,10 @@ export interface IMutableUser{
 
 
 
-// Types
+// Enums
 
-export type UserId = number | "@me";
+export enum UserType{
+    All,
+    Admin,
+    Regular
+}

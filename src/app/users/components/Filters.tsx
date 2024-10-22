@@ -1,8 +1,8 @@
 // Imports
 
 import { t } from "@/utils/i18n";
-import { IUserListFilters } from "@/utils/types/users";
-import { TextField } from "@mui/material";
+import { IUserListFilters, UserType } from "@/utils/types/users";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 
 
 
@@ -29,9 +29,12 @@ export default ({ filters, setFilters }: IProps): React.ReactNode => {
     }
 
     return (
-        <form className="py-4">
+        <form className="py-4 flex gap-2">
             <TextField
+                className="w-64"
                 placeholder={t("Search")}
+                label={t("Search")}
+                onChange={onSearchChange}
             />
         </form>
     );
