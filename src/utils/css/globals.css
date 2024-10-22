@@ -47,7 +47,7 @@
 @layer utilities{
     .box{
         @apply
-            p-2
+            p-4
             border
             border-color-2
             border-solid

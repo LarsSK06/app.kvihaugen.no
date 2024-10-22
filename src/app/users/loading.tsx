@@ -1,6 +1,7 @@
 // Imports
 
 import Loader from "@/components/shared/Loader";
+import TorsoCenterContent from "@/components/shared/TorsoCenterContent";
 
 
 
@@ -8,7 +9,7 @@ import Loader from "@/components/shared/Loader";
 
 
 export default (): React.ReactNode => (
-    <main className="w-full h-torso flex justify-center items-center">
+    <TorsoCenterContent>
         <Loader/>
-    </main>        
+    </TorsoCenterContent>
 );

@@ -29,7 +29,12 @@ export default (): React.ReactNode => {
     const buttons: IButton[] = [
         { href: "/", text: t("Home") },
         { href: "/users", text: t("Users") }
-    ];
+    ].concat(
+        {
+            href: "/auth/log-in",
+            text: t("Log in")
+        }
+    );
 
     return (
         <nav className="h-full">

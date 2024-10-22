@@ -20,6 +20,14 @@ export default ({ children }: IParentProps): React.ReactNode => {
                 main: "#4338ca",
             }
         },
+        typography: {
+            h1: { fontSize: 56 },
+            h2: { fontSize: 48 },
+            h3: { fontSize: 40 },
+            h4: { fontSize: 32 },
+            h5: { fontSize: 24 },
+            h6: { fontSize: 16 },
+        },
         defaultColorScheme: "dark"
     });
 

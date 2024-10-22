@@ -1,63 +1,71 @@
 // Imports
 
-import { BackendAddress, AFunc, HTTPMethod } from "../types";
-import { useState } from "react";
+import { BackendAddress, HTTPMethod, IAny } from "../types";
+import { useStaticState } from "./use-static-state";
 
 
 
 // Types
 
-export interface IUseFetchInput<T>{
-    method?: HTTPMethod;
-    body?: T;
-    setError?: (value?: string) => void;
+export interface IUseFetchOutput<Success, Error>{
+    ok: boolean;
+    code: number;
+    body: Success | Error;
 }
 
-export interface IUseFetchOutput<T>{
-    loading: boolean;
-    data?: T;
-    call: AFunc;
-}
+
+
+// Variables
+
+const [token, setToken] = useStaticState<string | undefined>(undefined);
 
 
 
 // Functions
 
-export function useFetch<Receive, Send = undefined>(endpoint: string, { method = HTTPMethod.GET, body, setError }: IUseFetchInput<Send>): IUseFetchOutput<Receive>{
+export const setAuthToken = setToken;
 
-    const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState<Receive>();
+export async function useFetch<Success, Error = string>(
+    endpoint: string | string[],
+    queryParams: IAny,
+    method: HTTPMethod = HTTPMethod.GET,
+    body?: any
+): Promise<IUseFetchOutput<Success, Error | string>>{
+    const address: string = [
+        process.env.NODE_ENV == "production"
+            ? BackendAddress.Prod.toString()
+            : BackendAddress.Prod.toString()
+    ]
+    .concat(
+        endpoint instanceof Array
+            ? endpoint
+            : []
+    )
+    .join("/");
 
-    async function call(): Promise<void>{
-        setLoading(true);
-
-        try{
-            const response: globalThis.Response =
-                await fetch("http://" + [
-                    process.env.NODE_ENV == "production"
-                        ? BackendAddress.Prod
-                        : BackendAddress.Dev,
-                    endpoint
-                ].join("/"), {
-                    method,
-                    body: body as BodyInit
-                });
-            
-            const data: Receive =
-                await response.json();
-
-            setData(data as Receive);
-
-            if(setError)
-                setError();
-        }
-        catch(error){
-            if(setError)
-                setError(`${error}`);
-        }
+    try{
+        const response: globalThis.Response =
+            await fetch(address, {
+                method,
+                headers: token
+                    ? { "Authorization": `Bearer ${token}` }
+                    : {},
+                body
+            });
         
-        setLoading(false);
+        return {
+            ok: response.ok,
+            code: response.status,
+            body: response.ok
+                ? await response.json() as Success
+                : await response.json() as Error
+        };
     }
-
-    return { loading, data, call };
+    catch(error){
+        return {
+            ok: false,
+            code: 400,
+            body: `${error}`
+        };
+    }
 }
