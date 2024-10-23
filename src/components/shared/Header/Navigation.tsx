@@ -31,8 +31,8 @@ export default (): React.ReactNode => {
         { href: "/users", text: t("Users") }
     ].concat(
         {
-            href: "/auth/log-in",
-            text: t("Log in")
+            href: "/auth/sign-in",
+            text: t("Sign in")
         }
     );
 

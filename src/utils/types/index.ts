@@ -21,9 +21,14 @@ export enum HTTPMethod{
     OPTIONS = "OPTIONS"
 }
 
+export enum HTTPContentType{
+    JSON = "application/json",
+    FormData = "multipart/form-data"
+}
+
 export enum BackendAddress{
-    Dev = "localhost:4000",
-    Prod = "server.local:4000"
+    Dev = "http://localhost:4000",
+    Prod = "http://server.local:4000"
 }
 
 export enum GlobalState{

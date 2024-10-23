@@ -1,71 +1,81 @@
 // Imports
 
-import { BackendAddress, HTTPMethod, IAny } from "../types";
+import { useState } from "react";
+import { BackendAddress, HTTPContentType, HTTPMethod } from "../types";
 import { useStaticState } from "./use-static-state";
+import { t } from "../i18n";
 
 
 
 // Types
 
-export interface IUseFetchOutput<Success, Error>{
-    ok: boolean;
-    code: number;
-    body: Success | Error;
+export interface IUseFetchOutput<T>{
+    loading: boolean;
+    data: T | undefined;
+    call: () => Promise<void>;
+}
+
+export interface IUseFetchInput<T>{
+    method?: HTTPMethod;
+    body?: T;
+    onError?: (value: string) => void;
 }
 
 
 
-// Variables
+// Function
 
-const [token, setToken] = useStaticState<string | undefined>(undefined);
+export function useFetch<Receive, Send = any>(endpoint: string | string[], { method = HTTPMethod.GET, body, onError }: IUseFetchInput<Send>): IUseFetchOutput<Receive>{
 
+    const [loading, setLoading] = useState<boolean>(false);
+    const [data, setData] = useState<Receive>();
 
-
-// Functions
-
-export const setAuthToken = setToken;
-
-export async function useFetch<Success, Error = string>(
-    endpoint: string | string[],
-    queryParams: IAny,
-    method: HTTPMethod = HTTPMethod.GET,
-    body?: any
-): Promise<IUseFetchOutput<Success, Error | string>>{
     const address: string = [
         process.env.NODE_ENV == "production"
             ? BackendAddress.Prod.toString()
-            : BackendAddress.Prod.toString()
+            : BackendAddress.Dev.toString()
     ]
     .concat(
         endpoint instanceof Array
             ? endpoint
-            : []
+            : [endpoint]
     )
     .join("/");
 
-    try{
-        const response: globalThis.Response =
-            await fetch(address, {
+    async function call(): Promise<void>{
+        setLoading(true);
+
+        const token: string | null =
+            window.sessionStorage.getItem("token") ??
+            window.localStorage.getItem("token");
+
+        try{
+            const response: Axios.AxiosXHR<Send> = await axios({
+                url: address,
+                headers: {
+                    "Content-Type": HTTPContentType.JSON,
+                    "Authorization": `Bearer ${token}`
+                },
                 method,
-                headers: token
-                    ? { "Authorization": `Bearer ${token}` }
-                    : {},
-                body
+                data: body
             });
-        
-        return {
-            ok: response.ok,
-            code: response.status,
-            body: response.ok
-                ? await response.json() as Success
-                : await response.json() as Error
-        };
+
+            if(response.status >= 200 && response.status < 300){
+                setData(response.data as unknown as Receive);
+            }
+            else if(onError)
+                onError(response.data as string ?? t("An error occured"));
+        }
+        catch(error){
+            if(onError) onError(t("An error occured"));
+        }
+
+        setLoading(false);
     }
-    catch(error){
-        return {
-            ok: false,
-            code: 400,
-            body: `${error}`
-        };
-    }
+
+    return {
+        loading,
+        data,
+        call
+    };
 }
