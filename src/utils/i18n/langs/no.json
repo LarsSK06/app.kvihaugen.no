@@ -1,0 +1,16 @@
+{
+    "all": {
+        "Home": "Hjem",
+        "Users": "Brukere",
+        "Email": "E-post",
+        "Password": "Passord"
+    },
+    "auth": {
+        "SignIn": "Logg inn",
+        "StaySignedIn": "Bli logget inn"
+    },
+    "error": {
+        "Error": "Feil",
+        "AnErrorOccured": "En feil oppstod"
+    }
+}

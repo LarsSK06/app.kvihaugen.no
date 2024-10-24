@@ -1,8 +1,8 @@
 // Imports
 
-import { t } from "@/utils/i18n";
-import { IUserListFilters, UserType } from "@/utils/types/users";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { t } from "i18next";
+import { IUserListFilters } from "@/utils/types/users";
+import { TextField } from "@mui/material";
 
 
 

@@ -47,11 +47,14 @@
 @layer utilities{
     .box{
         @apply
-            p-4
             border
             border-color-2
             border-solid
             rounded-default;
+    }
+
+    .box-p{
+        @apply p-4;
     }
 
     .responsive{
@@ -60,6 +63,12 @@
             mx-auto
             px-4
             max-w-full;
+    }
+
+    .bg-blur{
+        backdrop-filter:
+            blur(5px)
+            brightness(80%);
     }
 
     .skeleton{

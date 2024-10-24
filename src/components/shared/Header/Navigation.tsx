@@ -5,7 +5,7 @@
 // Imports
 
 import { useAnchorRouter, UseAnchorRouterFunction } from "@/utils/hooks/use-anchor-router";
-import { t } from "@/utils/i18n";
+import { t } from "i18next";
 import { Button } from "@mui/material";
 import { nanoid } from "nanoid";
 
@@ -27,12 +27,12 @@ export default (): React.ReactNode => {
     const route: UseAnchorRouterFunction = useAnchorRouter();
 
     const buttons: IButton[] = [
-        { href: "/", text: t("Home") },
-        { href: "/users", text: t("Users") }
+        { href: "/", text: t("all.Home") },
+        { href: "/users", text: t("all.Users") }
     ].concat(
         {
             href: "/auth/sign-in",
-            text: t("Sign in")
+            text: t("auth.SignIn")
         }
     );
 

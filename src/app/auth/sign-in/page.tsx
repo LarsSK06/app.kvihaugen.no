@@ -2,14 +2,16 @@
 
 
 
-import { formDataToJSON } from "@/utils/functions";
 // Imports
 
+import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
-import { t } from "@/utils/i18n";
+import { t } from "i18next";
 import { HTTPMethod } from "@/utils/types";
 import { Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+
+import ErrorModal from "@/components/shared/ErrorModal";
 
 // Types
 
@@ -24,17 +26,21 @@ interface ICredentials{
 
 export default (): React.ReactNode => {
 
-    const [credentials, setCredentials] = useState<ICredentials>();
     const [error, setError] = useState<string>();
+    const [credentials, setCredentials] = useState<ICredentials>();
+    const [staySignedIn, setStaySignedIn] = useState<boolean>(false);
+    const [showErrorModal, setShowErrorModal] = useState<boolean>(true);
 
     const {
         loading,
-        data,
         call
-    } = useFetch<string>(["Auth", "SignIn"], {
+    } = useFetch<string, ICredentials>({
+        endpoint: ["Auth", "SignIn"],
         method: HTTPMethod.POST,
         body: credentials,
-        onError: console.log
+        stringifyRequestBody: true,
+        onSuccess,
+        onError: setError
     });
 
     useEffect((): void => {
@@ -42,11 +48,15 @@ export default (): React.ReactNode => {
     }, [credentials]);
 
     useEffect((): void => {
-        if(!data) return;
+        if(error) setShowErrorModal(true);
+    }, [error]);
 
-        window.localStorage.setItem("token", data);
+    function onSuccess(response: string): void{
+        if(staySignedIn) window.localStorage.setItem("token", response);
+        else window.sessionStorage.setItem("token", response);
+
         window.location.href = "/";
-    }, [data]);
+    }
 
     function onSubmit(event: React.FocusEvent<HTMLFormElement>): void{
         event.preventDefault();
@@ -60,39 +70,58 @@ export default (): React.ReactNode => {
         setCredentials(parse);
     }
 
+    function onCheckboxChange(event: React.ChangeEvent<HTMLInputElement>): void{
+        setStaySignedIn(event.target.checked);
+    }
+
     return (
-        <form className="box w-96 flex flex-col gap-4" onSubmit={onSubmit}>
-            <Typography variant="h1">
-                {t("Sign in")}
-            </Typography>
-
-            <TextField
-                required
-                label={t("Email")}
-                placeholder={t("Email")}
-                type="email"
-                name="email"
+        <>
+            <ErrorModal
+                open={showErrorModal}
+                error={error}
+                onClose={(): void => setShowErrorModal(false)}
             />
+            <form className="box box-p w-96 flex flex-col gap-4" onSubmit={onSubmit}>
+                <Typography variant="h1">
+                    {t("auth.SignIn")}
+                </Typography>
 
-            <TextField
-                required
-                label={t("Password")}
-                placeholder={t("Password")}
-                type="password"
-                name="password"
-            />
+                <TextField
+                    required
+                    label={t("all.Email")}
+                    placeholder={t("all.Email")}
+                    type="email"
+                    name="email"
+                    disabled={loading}
+                />
 
-            <FormControlLabel
-                control={<Checkbox/>}
-                label={t("Stay signed in")}
-            />
+                <TextField
+                    required
+                    label={t("all.Password")}
+                    placeholder={t("all.Password")}
+                    type="password"
+                    name="password"
+                    disabled={loading}
+                />
 
-            <Button
-                variant="contained"
-                type="submit"
-            >
-                {t("Sign in")}
-            </Button>
-        </form>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            onChange={onCheckboxChange}
+                            disabled={loading}
+                        />
+                    }
+                    label={t("auth.StaySignedIn")}
+                />
+
+                <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={loading}
+                >
+                    {t("auth.SignIn")}
+                </Button>
+            </form>
+        </>
     );
 };

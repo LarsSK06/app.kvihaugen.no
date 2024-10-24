@@ -1,81 +1,95 @@
 // Imports
 
 import { useState } from "react";
-import { BackendAddress, HTTPContentType, HTTPMethod } from "../types";
-import { useStaticState } from "./use-static-state";
-import { t } from "../i18n";
-
-
+import { BackendAddress, HTTPMethod } from "../types";
+import { t } from "i18next";
 
 // Types
 
-export interface IUseFetchOutput<T>{
+export interface IUseFetchOutput{
     loading: boolean;
-    data: T | undefined;
     call: () => Promise<void>;
 }
 
-export interface IUseFetchInput<T>{
+export interface IUseFetchInput<Receive, Send>{
+    endpoint: string | string[],
     method?: HTTPMethod;
-    body?: T;
-    onError?: (value: string) => void;
+    body?: Send;
+    stringifyRequestBody?: boolean;
+    parseResponseBody?: boolean;
+    onSuccess?: (value: Receive) => void;
+    onError?: (error: string) => void;
 }
 
 
 
-// Function
+// Functions
 
-export function useFetch<Receive, Send = any>(endpoint: string | string[], { method = HTTPMethod.GET, body, onError }: IUseFetchInput<Send>): IUseFetchOutput<Receive>{
+export function useFetch<Receive, Send = undefined>({
+    endpoint,
+    method = HTTPMethod.GET,
+    body,
+    stringifyRequestBody,
+    parseResponseBody,
+    onSuccess,
+    onError
+}: IUseFetchInput<Receive, Send>): IUseFetchOutput{
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState<Receive>();
 
-    const address: string = [
-        process.env.NODE_ENV == "production"
-            ? BackendAddress.Prod.toString()
-            : BackendAddress.Dev.toString()
-    ]
-    .concat(
-        endpoint instanceof Array
-            ? endpoint
-            : [endpoint]
-    )
-    .join("/");
+    const address: string =
+        [
+            process.env.NODE_ENV == "production"
+                ? BackendAddress.Prod.toString()
+                : BackendAddress.Dev.toString()
+        ]
+        .concat(
+            endpoint instanceof Array
+                ? endpoint
+                : [endpoint]
+        )
+        .join("/");
 
     async function call(): Promise<void>{
         setLoading(true);
 
-        const token: string | null =
-            window.sessionStorage.getItem("token") ??
-            window.localStorage.getItem("token");
-
         try{
-            const response: Axios.AxiosXHR<Send> = await axios({
-                url: address,
-                headers: {
-                    "Content-Type": HTTPContentType.JSON,
-                    "Authorization": `Bearer ${token}`
-                },
-                method,
-                data: body
-            });
+            const response: globalThis.Response =
+                await fetch(address, {
+                    method,
+                    headers: {
+                        "Authorization": `Bearer ${null}`
+                    },
+                    body: stringifyRequestBody
+                        ? JSON.stringify(body)
+                        : body as BodyInit
+                });
+            
+            if(!response.ok){
+                if(onError){
+                    try{ onError(await response.text()); }
+                    catch{ onError(t("errors.AnErrorOccured")); }
+                }
 
-            if(response.status >= 200 && response.status < 300){
-                setData(response.data as unknown as Receive);
+                return;
             }
-            else if(onError)
-                onError(response.data as string ?? t("An error occured"));
+
+            if(parseResponseBody){
+                try{ if(onSuccess) onSuccess(await response.json() as Receive); }
+                catch(error){ if(onError) onError(`${error}`); }
+            }
+            else{
+                try{ if(onSuccess) onSuccess(await response.text() as Receive); }
+                catch(error){ if(onError) onError(`${error}`); }
+            }
         }
-        catch(error){
-            if(onError) onError(t("An error occured"));
-        }
+        catch(error){ if(onError) onError(`${error}`); }
 
         setLoading(false);
     }
 
     return {
         loading,
-        data,
         call
     };
 }
