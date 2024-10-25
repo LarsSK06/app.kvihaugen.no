@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BackendAddress, HTTPMethod } from "../types";
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 
 // Types
 
@@ -17,6 +17,7 @@ export interface IUseFetchInput<Receive, Send>{
     body?: Send;
     stringifyRequestBody?: boolean;
     parseResponseBody?: boolean;
+    authorize?: boolean;
     onSuccess?: (value: Receive) => void;
     onError?: (error: string) => void;
 }
@@ -31,6 +32,7 @@ export function useFetch<Receive, Send = undefined>({
     body,
     stringifyRequestBody,
     parseResponseBody,
+    authorize = true,
     onSuccess,
     onError
 }: IUseFetchInput<Receive, Send>): IUseFetchOutput{
@@ -53,12 +55,19 @@ export function useFetch<Receive, Send = undefined>({
     async function call(): Promise<void>{
         setLoading(true);
 
+        const token: string | undefined =
+            window.localStorage.getItem("token") ??
+            window.sessionStorage.getItem("token") ??
+            undefined;
+
         try{
             const response: globalThis.Response =
                 await fetch(address, {
                     method,
                     headers: {
-                        "Authorization": `Bearer ${null}`
+                        "Authorization": authorize
+                            ? `Bearer ${token}`
+                            : ""
                     },
                     body: stringifyRequestBody
                         ? JSON.stringify(body)

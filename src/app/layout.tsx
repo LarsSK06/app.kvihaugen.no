@@ -1,7 +1,6 @@
 // Imports
 
 import "@/utils/css/globals.css";
-import "@/utils/i18n";
 
 import { IParentProps } from "@/utils/types";
 import { Metadata } from "next";

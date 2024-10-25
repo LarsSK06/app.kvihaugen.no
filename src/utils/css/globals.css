@@ -42,6 +42,15 @@
 
         --border-radius-default: 4px;
     }
+
+    ::backdrop{
+        @apply
+            flex
+            justify-center
+            items-center;
+
+        backdrop-filter: blur(5px);
+    }
 }
 
 @layer utilities{

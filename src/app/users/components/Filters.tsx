@@ -1,6 +1,6 @@
 // Imports
 
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 import { IUserListFilters } from "@/utils/types/users";
 import { TextField } from "@mui/material";
 

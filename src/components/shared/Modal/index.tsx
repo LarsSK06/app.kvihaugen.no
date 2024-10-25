@@ -2,8 +2,10 @@
 
 import { IParentProps } from "@/utils/types";
 import { Button, Typography } from "@mui/material";
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 import { nanoid } from "nanoid";
+import { MutableRefObject, useEffect, useRef } from "react";
+import HorizontalRule from "../HorizontalRule";
 
 
 
@@ -25,7 +27,7 @@ interface IProps extends IParentProps{
 // Component
 
 export default ({
-    id = nanoid(),
+    id = nanoid(6),
     open,
     heading,
     cancel,
@@ -37,42 +39,46 @@ export default ({
 }: IProps): React.ReactNode => {
 
     const labelId: string = `${id}:label`;
+    const dialog: MutableRefObject<HTMLDialogElement | null> = useRef<HTMLDialogElement | null>(null);
+
+    useEffect((): void => {
+        if(open) dialog.current?.showModal();
+        else dialog.current?.close();
+    }, [open]);
 
     return (
-        <div className="w-full h-vp fixed left-0 top-0 justify-center items-center bg-blur z-10" style={{ display: open ? "flex" : "none" }}>
-            <div id={id} role="dialog" aria-labelledby={labelId} aria-modal="true" className="w-fit min-w-96 h-fit overflow-hidden box bg-color-1">
-                <div className="w-full h-fit box-p flex justify-between items-start">
-                    {heading && (
-                        <Typography id={labelId} variant="h2">
-                            {heading}
-                        </Typography>
-                    )}
-                    <Button onClick={onClose} className="ml-auto">
-                        X
-                    </Button>
-                </div>
-                <hr className="w-full border-solid border-t border-t-color-2"/>
-                <div className="w-fit min-w-full box-p">
-                    {children}
-                </div>
-                {(onCancel || onAccept) && (
-                    <>
-                        <hr className="w-full border-solid border-t border-t-color-2"/>
-                        <div className="w-fill h-fit flex justify-end items-center gap-1 box-p">
-                            {onCancel && (
-                                <Button onClick={onCancel}>
-                                    {cancel ?? t("all.Cancel")}
-                                </Button>
-                            )}
-                            {onAccept && (
-                                <Button onClick={onAccept}>
-                                    {accept ?? t("all.Accept")}
-                                </Button>
-                            )}
-                        </div>
-                    </>
+        <dialog aria-labelledby={labelId} ref={dialog} className="max-w-full box bg-color-1 m-auto">
+            <div className="w-full h-fit box-p flex justify-between items-start gap-8">
+                {heading && (
+                    <Typography id={labelId} variant="h2">
+                        {heading}
+                    </Typography>
                 )}
+                <Button onClick={onClose} className="ml-auto">
+                    X
+                </Button>
             </div>
-        </div>
+            <HorizontalRule/>
+            <div className="w-fit min-w-full box-p">
+                {children}
+            </div>
+            {(onCancel || onAccept) && (
+                <>
+                    <HorizontalRule/>
+                    <div className="w-fill h-fit flex justify-end items-center gap-1 box-p">
+                        {onCancel && (
+                            <Button onClick={onCancel} variant="outlined">
+                                {cancel ?? t("all.Cancel")}
+                            </Button>
+                        )}
+                        {onAccept && (
+                            <Button onClick={onAccept} variant="contained">
+                                {accept ?? t("all.Accept")}
+                            </Button>
+                        )}
+                    </div>
+                </>
+            )}
+        </dialog>
     );
 };

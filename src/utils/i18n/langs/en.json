@@ -1,12 +1,1 @@
-{
-    "all": {
-        "Home": "Home",
-        "Users": "Users",
-        "Email": "Email",
-        "Password": "Password"
-    },
-    "auth": {
-        "SignIn": "Sign in",
-        "StaySignedIn": "Stay signed in"
-    }
-}
+{}

@@ -1,7 +1,7 @@
 // Imports
 
 import { useFetch } from "@/utils/hooks/use-fetch";
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 import { IPublicUser, IUserListFilters } from "@/utils/types/users";
 import React, { useEffect } from "react";
 import { useAnchorRouter, UseAnchorRouterFunction } from "@/utils/hooks/use-anchor-router";

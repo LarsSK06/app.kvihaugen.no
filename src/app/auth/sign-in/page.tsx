@@ -6,7 +6,7 @@
 
 import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 import { HTTPMethod } from "@/utils/types";
 import { Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -29,7 +29,7 @@ export default (): React.ReactNode => {
     const [error, setError] = useState<string>();
     const [credentials, setCredentials] = useState<ICredentials>();
     const [staySignedIn, setStaySignedIn] = useState<boolean>(false);
-    const [showErrorModal, setShowErrorModal] = useState<boolean>(true);
+    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 
     const {
         loading,
@@ -40,7 +40,10 @@ export default (): React.ReactNode => {
         body: credentials,
         stringifyRequestBody: true,
         onSuccess,
-        onError: setError
+        onError: (error: string): void => {
+            setError(error);
+            setShowErrorModal(true);
+        }
     });
 
     useEffect((): void => {
@@ -88,6 +91,7 @@ export default (): React.ReactNode => {
 
                 <TextField
                     required
+                    autoFocus
                     label={t("all.Email")}
                     placeholder={t("all.Email")}
                     type="email"

@@ -5,7 +5,7 @@
 // Imports
 
 import { useAnchorRouter, UseAnchorRouterFunction } from "@/utils/hooks/use-anchor-router";
-import { t } from "i18next";
+import { t } from "@/utils/i18n";
 import { Button } from "@mui/material";
 import { nanoid } from "nanoid";
 
