@@ -4,7 +4,15 @@ import { useState } from "react";
 import { BackendAddress, HTTPMethod } from "../types";
 import { t } from "@/utils/i18n";
 
+
+
 // Types
+
+type URLSection =
+    | string
+    | number
+    | undefined
+    | null;
 
 export interface IUseFetchOutput{
     loading: boolean;
@@ -15,11 +23,8 @@ export interface IUseFetchInput<Receive, Send>{
     endpoint: string | string[],
     method?: HTTPMethod;
     body?: Send;
-    stringifyRequestBody?: boolean;
-    parseResponseBody?: boolean;
-    authorize?: boolean;
-    onSuccess?: (value: Receive) => void;
-    onError?: (error: string) => void;
+    onSuccess: (value: Receive) => void;
+    onError: (error: string) => void;
 }
 
 
@@ -30,9 +35,6 @@ export function useFetch<Receive, Send = undefined>({
     endpoint,
     method = HTTPMethod.GET,
     body,
-    stringifyRequestBody,
-    parseResponseBody,
-    authorize = true,
     onSuccess,
     onError
 }: IUseFetchInput<Receive, Send>): IUseFetchOutput{
@@ -55,44 +57,46 @@ export function useFetch<Receive, Send = undefined>({
     async function call(): Promise<void>{
         setLoading(true);
 
-        const token: string | undefined =
-            window.localStorage.getItem("token") ??
+        const token: string | null =
             window.sessionStorage.getItem("token") ??
-            undefined;
+            window.localStorage.getItem("token");
 
         try{
             const response: globalThis.Response =
                 await fetch(address, {
                     method,
                     headers: {
-                        "Authorization": authorize
-                            ? `Bearer ${token}`
-                            : ""
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": typeof body == "object"
+                            ? "application/json"
+                            : "text/plain"
                     },
-                    body: stringifyRequestBody
-                        ? JSON.stringify(body)
-                        : body as BodyInit
+                    body: body && (
+                        typeof body == "object"
+                            ? JSON.stringify(body)
+                            : `${body}`
+                    )
                 });
             
-            if(!response.ok){
-                if(onError){
-                    try{ onError(await response.text()); }
-                    catch{ onError(t("errors.AnErrorOccured")); }
-                }
+            const contentType: string = response.headers.get("Content-Type") ?? "";
+            const json: boolean =
+                contentType == "application/json; charset=utf-8" ||
+                contentType == "application/problem+json; charset=utf-8";
 
-                return;
-            }
-
-            if(parseResponseBody){
-                try{ if(onSuccess) onSuccess(await response.json() as Receive); }
-                catch(error){ if(onError) onError(`${error}`); }
+            if(response.ok){
+                if(json) onSuccess(await response.json() as Receive);
+                else onSuccess(await response.text() as Receive);
             }
             else{
-                try{ if(onSuccess) onSuccess(await response.text() as Receive); }
-                catch(error){ if(onError) onError(`${error}`); }
+                if(json){
+                    const parse: { title?: string; } = await response.json();
+
+                    onError(t(parse.title ?? "errors.SystemHasABadDay"));
+                }
+                else onError(t(await response.text()));
             }
         }
-        catch(error){ if(onError) onError(`${error}`); }
+        catch(error){ onError(t(`${error}`)); }
 
         setLoading(false);
     }

@@ -8,14 +8,12 @@ import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { HTTPMethod } from "@/utils/types";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Endpoint, IPassport } from "@/utils/types/auth";
 
 import ErrorModal from "@/components/shared/ErrorModal";
 import Link from "next/link";
-
-
+import { Endpoint, IPassport } from "@/utils/types/auth";
 
 // Types
 
@@ -38,7 +36,7 @@ export default (): React.ReactNode => {
         loading,
         call
     } = useFetch<IPassport, ICredentials>({
-        endpoint: [Endpoint.Auth, Endpoint.SignIn],
+        endpoint: [Endpoint.Auth, Endpoint.SignUp],
         method: HTTPMethod.POST,
         body: credentials,
         onSuccess,
@@ -84,8 +82,18 @@ export default (): React.ReactNode => {
             />
             <form className="box box-p w-96 flex flex-col gap-4" onSubmit={onSubmit}>
                 <Typography variant="h1">
-                    {t("auth.SignIn")}
+                    {t("auth.SignUp")}
                 </Typography>
+
+                <TextField
+                    required
+                    autoFocus
+                    label={t("all.Name")}
+                    placeholder={t("all.Name")}
+                    type="text"
+                    name="name"
+                    disabled={loading}
+                />
 
                 <TextField
                     required
@@ -114,8 +122,8 @@ export default (): React.ReactNode => {
                     {t("auth.SignIn")}
                 </Button>
 
-                <Link href="/auth/sign-up">
-                    {t("auth.SwitchToSignUp")}
+                <Link href="/auth/sign-in">
+                    {t("auth.SwitchToSignIn")}
                 </Link>
             </form>
         </>

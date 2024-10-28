@@ -30,10 +30,7 @@ export default (): React.ReactNode => {
         { href: "/", text: t("all.Home") },
         { href: "/users", text: t("all.Users") }
     ].concat(
-        {
-            href: "/auth/sign-in",
-            text: t("auth.SignIn")
-        }
+        { href: "/auth/sign-in", text: t("auth.SignIn") }
     );
 
     return (

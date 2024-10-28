@@ -1,5 +1,6 @@
 {
     "all": {
+        "Id": "Id",
         "Home": "Hjem",
         "Users": "Brukere",
         "Email": "E-post",
@@ -7,11 +8,23 @@
         "Ok": "Ok",
         "Accept": "Godkjenn",
         "Cancel": "Avbryt",
-        "Decline": "Avvis"
+        "Decline": "Avvis",
+        "Name": "Navn",
+        "Edit": "Rediger",
+        "Delete": "Slett",
+        "Actions": "Handlinger"
     },
     "auth": {
         "SignIn": "Logg inn",
-        "StaySignedIn": "Forbli logget inn"
+        "SignUp": "Lag bruker",
+        "StaySignedIn": "Forbli logget inn",
+        "SwitchToSignUp": "Har du ikke bruker? Lag en her!",
+        "SwitchToSignIn": "Har du allerede en bruker? Logg inn her!"
+    },
+    "confirmations": {
+        "AreYouSure": "Er du sikker?",
+        "AreYouReallySure": "Er du helt sikker på at du ønsker å utføre denne handlingen?",
+        "YouAreAboutToDeleteUser": "Du er i ferd med å slette en bruker! Er du sikker?"
     },
     "errors": {
         "Error": "Feil",

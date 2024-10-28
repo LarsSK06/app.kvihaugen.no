@@ -1,8 +1,8 @@
 // Imports
 
-import { nanoid } from "nanoid";
 import { t } from "@/utils/i18n";
 import { Typography } from "@mui/material";
+import { nanoid } from "nanoid";
 
 import Modal from "./Modal";
 
@@ -14,8 +14,9 @@ interface IProps{
     id?: string;
     open: boolean;
     loading?: boolean;
-    error?: string;
+    message?: string;
     onClose: () => void;
+    onAccept: () => void;
 }
 
 
@@ -26,20 +27,21 @@ export default ({
     id = nanoid(6),
     open,
     loading,
-    error,
-    onClose
+    message,
+    onClose,
+    onAccept
 }: IProps): React.ReactNode => (
     <Modal
         id={id}
         open={open}
         loading={loading}
-        cancel={t("all.Decline")}
-        heading={t("errors.AnErrorOccured")}
+        heading={t("confirmations.AreYouSure")}
         onClose={onClose}
         onCancel={onClose}
+        onAccept={onAccept}
     >
         <Typography>
-            {error ?? t("errors.SystemHasABadDay")}
+            {message ?? t("confirmations.AreYouReallySure")}
         </Typography>
     </Modal>
 );
