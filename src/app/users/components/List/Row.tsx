@@ -23,7 +23,7 @@ interface IProps{
 // Component
 
 export default ({ id, name, email, admin, onEditClick, onDeleteClick }: IProps): React.ReactNode => (
-    <TableRow key={id}>
+    <TableRow>
         <TableCell>
             <Typography>
                 {id}

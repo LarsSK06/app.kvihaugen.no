@@ -33,6 +33,9 @@
         "SeeDetailedError": "Vis feilen i detalj",
         "HideDetailedError": "Skjul feilen i detalj"
     },
+    "users": {
+        "EditUser": "Rediger bruker"
+    },
     "$": {
         "TypeError: Failed to fetch": "Kunne ikke kontakte server! Kontakt domene- eller systemadministrator, og vis til feilmelding."
     }

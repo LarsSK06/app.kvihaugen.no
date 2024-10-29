@@ -58,7 +58,6 @@ export function useFetch<Receive, Send = undefined>({
         setLoading(true);
 
         const token: string | null =
-            window.sessionStorage.getItem("token") ??
             window.localStorage.getItem("token");
 
         try{

@@ -19,7 +19,7 @@ interface IProps extends IParentProps{
     heading?: string;
     cancel?: string;
     accept?: string;
-    onClose: () => void;
+    onClose?: () => void;
     onCancel?: () => void;
     onAccept?: () => void;
 }

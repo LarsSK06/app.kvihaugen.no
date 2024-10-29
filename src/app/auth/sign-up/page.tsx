@@ -57,6 +57,7 @@ export default (): React.ReactNode => {
     function onSuccess(response: IPassport): void{
         window.localStorage.setItem("token", response.token);
         window.localStorage.setItem("userId", response.user.id.toString());
+        window.localStorage.setItem("admin", response.user.admin.toString());
         window.location.href = "/";
     }
 

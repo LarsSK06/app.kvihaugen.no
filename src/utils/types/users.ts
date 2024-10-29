@@ -18,6 +18,10 @@ export interface IMutableUser{
     email: string;
 }
 
+export interface IUserToEdit extends IMutableUser{
+    id: number;
+}
+
 
 
 // Enums

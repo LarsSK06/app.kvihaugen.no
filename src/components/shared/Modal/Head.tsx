@@ -22,7 +22,7 @@ export default ({ id, heading, onClose }: IProps): React.ReactNode => {
 
     const labelId: string = `${id}:label`;
 
-    return (
+    return (heading || onClose) && (
         <>
             <div className="w-full h-fit box-p flex justify-between items-start gap-8">
                 {heading && (
@@ -30,9 +30,11 @@ export default ({ id, heading, onClose }: IProps): React.ReactNode => {
                         {heading}
                     </Typography>
                 )}
-                <Button onClick={onClose} className="ml-auto">
-                    X
-                </Button>
+                {onClose && (
+                    <Button onClick={onClose} className="ml-auto">
+                        X
+                    </Button>
+                )}
             </div>
             <HorizontalRule/>
         </>
