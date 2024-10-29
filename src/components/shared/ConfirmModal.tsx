@@ -2,7 +2,6 @@
 
 import { t } from "@/utils/i18n";
 import { Typography } from "@mui/material";
-import { nanoid } from "nanoid";
 
 import Modal from "./Modal";
 
@@ -11,7 +10,7 @@ import Modal from "./Modal";
 // Types
 
 interface IProps{
-    id?: string;
+    id: string;
     open: boolean;
     loading?: boolean;
     message?: string;
@@ -24,7 +23,7 @@ interface IProps{
 // Component
 
 export default ({
-    id = nanoid(6),
+    id,
     open,
     loading,
     message,

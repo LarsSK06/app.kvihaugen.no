@@ -18,6 +18,7 @@ export default ({ children }: IParentProps): React.ReactNode => {
         palette: {
             primary: {
                 main: "#4338ca",
+                contrastText: "#fff"
             }
         },
         typography: {
@@ -26,7 +27,7 @@ export default ({ children }: IParentProps): React.ReactNode => {
             h3: { fontSize: 40 },
             h4: { fontSize: 32 },
             h5: { fontSize: 24 },
-            h6: { fontSize: 16 },
+            h6: { fontSize: 16 }
         },
         defaultColorScheme: "dark"
     });

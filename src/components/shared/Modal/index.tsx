@@ -1,20 +1,19 @@
 // Imports
 
 import { IParentProps } from "@/utils/types";
-import { Button, Typography } from "@mui/material";
-import { t } from "@/utils/i18n";
-import { nanoid } from "nanoid";
-import { MutableRefObject, useEffect, useRef } from "react";
-import HorizontalRule from "../HorizontalRule";
+import { MutableRefObject, useEffect, useRef, useState, } from "react";
+
 import Foot from "./Foot";
 import Head from "./Head";
+import classNames from "classnames";
+import styles from "./styles.module.css";
 
 
 
 // Types
 
 interface IProps extends IParentProps{
-    id?: string;
+    id: string;
     open: boolean;
     loading?: boolean;
     heading?: string;
@@ -30,7 +29,7 @@ interface IProps extends IParentProps{
 // Component
 
 export default ({
-    id = nanoid(6),
+    id,
     open,
     loading,
     heading,
@@ -42,16 +41,26 @@ export default ({
     children
 }: IProps): React.ReactNode => {
 
+    const [showActiveState, setShowActiveState] = useState<boolean>(false);
+
     const labelId: string = `${id}:label`;
     const dialog: MutableRefObject<HTMLDialogElement | null> = useRef<HTMLDialogElement | null>(null);
 
     useEffect((): void => {
         if(open) dialog.current?.showModal();
-        else dialog.current?.close();
+        else setTimeout((): void => dialog.current?.close(), 150);
+
+        setShowActiveState(open);
     }, [open]);
 
+    function onDialogCancel(event: React.SyntheticEvent<HTMLDialogElement>): void{
+        event.preventDefault();
+
+        if(onClose) onClose();
+    }
+
     return (
-        <dialog aria-labelledby={labelId} ref={dialog} className="max-w-full box bg-color-1 m-auto">
+        <dialog onCancel={onDialogCancel} aria-labelledby={labelId} ref={dialog} className={classNames("max-w-full box bg-color-1 m-auto opacity-0 transition-all", showActiveState && styles.open)}>
             <Head
                 id={id}
                 heading={heading}
