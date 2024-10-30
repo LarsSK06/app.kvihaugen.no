@@ -1,5 +1,6 @@
 // Imports
 
+import { useStaticState } from "../hooks/use-static-state";
 import { IAny } from "../types";
 
 import en from "./langs/en.json";
@@ -9,12 +10,15 @@ import no from "./langs/no.json";
 
 // Variables
 
-const lng: string = "no";
+const [lng, setLng] = useStaticState<string>("no");
+
 const lngs: IAny = { en, no };
 
 
 
 // Functions
+
+export const setLanguage = setLng;
 
 export function t(phrase: string): string{
     if(!(lng in lngs))
@@ -32,10 +36,12 @@ export function t(phrase: string): string{
 
         return cursor[split[split.length - 1]] ?? phrase;
     }
-    else if(
+    
+    if(
         "$" in lngs[lng] &&
         phrase in lngs[lng]["$"] &&
         split.length == 1
     ) return lngs[lng]["$"][phrase];
-    else return lngs[lng][phrase] ?? phrase;
+
+    return lngs[lng][phrase] ?? phrase;
 }

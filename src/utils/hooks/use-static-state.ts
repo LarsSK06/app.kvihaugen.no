@@ -1,8 +1,9 @@
 // Functions
 
-export function useStaticState<T>(initialValue: T): [T, (value: T) => void]{
+export function useStaticState<T>(initialValue: T): [T | typeof initialValue, (value: T) => void]{
+    type TT = T | typeof initialValue;
+    
+    let state: TT = initialValue;
 
-    let state: T = initialValue;
-
-    return [state, (value: T) => { value = state; }];
+    return [state, (value: TT) => { state = value; }];
 }

@@ -1,7 +1,7 @@
 // Imports
 
 import { t } from "@/utils/i18n";
-import { Button, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 
 
 
@@ -11,9 +11,6 @@ interface IProps{
     id: number;
     name: string;
     email: string;
-    admin: boolean;
-    onEditClick: (id: number) => void;
-    onDeleteClick: (id: number) => void;
 }
 
 
@@ -23,10 +20,7 @@ interface IProps{
 export default ({
     id,
     name,
-    email,
-    admin,
-    onEditClick,
-    onDeleteClick
+    email
 }: IProps): React.ReactNode => {
 
     return (
@@ -71,16 +65,6 @@ export default ({
                     </TableRow>
                 </TableBody>
             </Table>
-            {admin && (
-                <div className="flex flex-col gap-1 mt-4">
-                    <Button onClick={(): void => onEditClick(id)} variant="outlined">
-                        {t("all.Edit")}
-                    </Button>
-                    <Button onClick={(): void => onDeleteClick(id)} variant="outlined" color="error">
-                        {t("all.Delete")}
-                    </Button>
-                </div>
-            )}
         </li>
     );
 };

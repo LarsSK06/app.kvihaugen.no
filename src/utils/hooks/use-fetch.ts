@@ -86,14 +86,12 @@ export function useFetch<Receive, Send = undefined>({
                 if(json) onSuccess(await response.json() as Receive);
                 else onSuccess(await response.text() as Receive);
             }
-            else{
-                if(json){
-                    const parse: { title?: string; } = await response.json();
+            else if(json){
+                const parse: { title?: string; } = await response.json();
 
-                    onError(t(parse.title ?? "errors.SystemHasABadDay"));
-                }
-                else onError(t(await response.text()));
+                onError(t(parse.title ?? "errors.SystemHasABadDay"));
             }
+            else onError(t(await response.text()));
         }
         catch(error){ onError(t(`${error}`)); }
 
