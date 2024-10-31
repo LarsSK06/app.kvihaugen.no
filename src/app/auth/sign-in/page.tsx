@@ -10,7 +10,8 @@ import { t } from "@/utils/i18n";
 import { HTTPMethod } from "@/utils/types";
 import { Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Endpoint, IPassport } from "@/utils/types/auth";
+import { Endpoint } from "@/utils/types";
+import { IPassport } from "@/utils/types/auth";
 
 import ErrorModal from "@/components/shared/ErrorModal";
 import Link from "next/link";

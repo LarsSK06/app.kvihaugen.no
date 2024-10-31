@@ -31,8 +31,12 @@ export enum BackendAddress{
     Prod = "http://server.local:4000"
 }
 
-export enum GlobalState{
-    User = "user"
+export enum Endpoint{
+    Auth = "Auth",
+    SignIn = "SignIn",
+    SignUp = "SignUp",
+    Users = "Users",
+    Documents = "Documents"
 }
 
 

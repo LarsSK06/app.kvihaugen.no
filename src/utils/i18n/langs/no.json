@@ -12,7 +12,9 @@
         "Name": "Navn",
         "Edit": "Rediger",
         "Delete": "Slett",
-        "Actions": "Handlinger"
+        "Actions": "Handlinger",
+        "Documents": "Dokumenter",
+        "Search": "Søk"
     },
     "auth": {
         "SignIn": "Logg inn",
@@ -31,10 +33,14 @@
         "AnErrorOccured": "En feil oppstod",
         "SystemHasABadDay": "Det ser ut til at systemet har en dårlig dag",
         "SeeDetailedError": "Vis feilen i detalj",
-        "HideDetailedError": "Skjul feilen i detalj"
+        "HideDetailedError": "Skjul feilen i detalj",
+        "CouldNotGetAnyResults": "Kunne ikke finne noen resultater"
     },
     "users": {
         "EditUser": "Rediger bruker"
+    },
+    "documents": {
+        "ChooseADocument": "Velg et dokument"
     },
     "$": {
         "TypeError: Failed to fetch": "Kunne ikke kontakte server! Kontakt domene- eller systemadministrator, og vis til feilmelding."

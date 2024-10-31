@@ -28,6 +28,7 @@ export default (): React.ReactNode => {
 
     const buttons: IButton[] = [
         { href: "/", text: t("all.Home") },
+        { href: "/documents", text: t("all.Documents") },
         { href: "/users", text: t("all.Users") }
     ].concat(
         { href: "/auth/sign-in", text: t("auth.SignIn") }

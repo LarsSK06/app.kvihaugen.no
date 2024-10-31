@@ -8,12 +8,13 @@ import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { HTTPMethod } from "@/utils/types";
-import { Button, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { IPassport } from "@/utils/types/auth";
+import { Endpoint } from "@/utils/types";
 
 import ErrorModal from "@/components/shared/ErrorModal";
 import Link from "next/link";
-import { Endpoint, IPassport } from "@/utils/types/auth";
 
 // Types
 
