@@ -1,6 +1,5 @@
 // Imports
 
-import { useStaticState } from "../hooks/use-static-state";
 import { IAny } from "../types";
 
 import en from "./langs/en.json";
@@ -10,7 +9,7 @@ import no from "./langs/no.json";
 
 // Variables
 
-const [lng, setLng] = useStaticState<string>("no");
+export let lng: string = "no";
 
 const lngs: IAny = { en, no };
 
@@ -18,7 +17,9 @@ const lngs: IAny = { en, no };
 
 // Functions
 
-export const setLanguage = setLng;
+export function setLng(target: string): void{
+    lng = target;
+}
 
 export function t(phrase: string): string{
     if(!(lng in lngs))

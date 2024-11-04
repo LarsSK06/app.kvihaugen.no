@@ -1,6 +1,10 @@
+"use server";
+
+
+
 // Imports
 
-import TorsoCenterContent from "@/components/shared/TorsoCenterContent";
+import Poster from "@/utils/components/Poster";
 
 import { IParentProps } from "@/utils/types";
 
@@ -9,7 +13,7 @@ import { IParentProps } from "@/utils/types";
 // Component
 
 export default ({ children }: IParentProps): React.ReactNode => (
-    <TorsoCenterContent>
+    <Poster>
         {children}
-    </TorsoCenterContent>
+    </Poster>
 );

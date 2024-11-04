@@ -1,5 +1,5 @@
 {
-    "name": "kvihaugen.no",
+    "name": "identity.kvihaugen.no",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -9,9 +9,6 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@emotion/react": "^11.13.3",
-        "@emotion/styled": "^11.13.0",
-        "@mui/material": "^6.1.4",
         "classnames": "^2.5.1",
         "dotenv": "^16.4.5",
         "nanoid": "^5.0.7",
