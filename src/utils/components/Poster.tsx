@@ -1,7 +1,3 @@
-"use server";
-
-
-
 // Imports
 
 import { IParentProps } from "../types";

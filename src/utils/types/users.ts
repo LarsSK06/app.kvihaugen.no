@@ -1,33 +1,16 @@
-// Interfaces
+// Imports
 
-export interface IUserListFilters{
-    search?: string;
-    type?: UserType;
-}
+import { Gender } from "./auth";
+
+
+
+// Interfaces
 
 export interface IPublicUser{
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
+    gender: Gender;
     email: string;
-    admin: boolean;
-}
-
-export interface IMutableUser{
-    name: string;
-    password: string;
-    email: string;
-}
-
-export interface IUserToEdit extends IMutableUser{
-    id: number;
-}
-
-
-
-// Enums
-
-export enum UserType{
-    All,
-    Admin,
-    Regular
+    administrator: boolean;
 }

@@ -8,6 +8,11 @@ export interface IParentProps<T = React.ReactNode>{
     children?: T;
 }
 
+export interface ICoords{
+    x: number;
+    y: number;
+}
+
 
 
 // Enums
@@ -32,11 +37,10 @@ export enum BackendAddress{
 }
 
 export enum Endpoint{
-    Auth = "Auth",
-    SignIn = "SignIn",
-    SignUp = "SignUp",
-    Users = "Users",
-    Documents = "Documents"
+    Auth = "auth",
+    SignIn = "sign-in",
+    SignUp = "sign-up",
+    Users = "users"
 }
 
 

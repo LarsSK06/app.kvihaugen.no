@@ -10,11 +10,18 @@
         "Cancel": "Avbryt",
         "Decline": "Avvis",
         "Name": "Navn",
+        "FirstName": "Fornavn",
+        "LastName": "Etternavn",
         "Edit": "Rediger",
         "Delete": "Slett",
         "Actions": "Handlinger",
         "Documents": "Dokumenter",
-        "Search": "Søk"
+        "Search": "Søk",
+        "Gender": "Kjønn",
+        "Male": "Mann",
+        "Female": "Kvinne",
+        "Other": "Annet",
+        "Undefined": "Udefinert"
     },
     "auth": {
         "SignIn": "Logg inn",
