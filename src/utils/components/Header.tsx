@@ -2,44 +2,42 @@
 
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../contexts";
-import { Button, Link, Skeleton, Typography } from "@mui/material";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { t } from "../i18n";
-
-import Image from "next/image";
 
 
 
 // Types
 
+interface IButton{
+    text: string;
+    href: string;
+}
+
+
+
 // Component
 
-export default async (): Promise<React.ReactNode> => {
+export default (): React.ReactNode => {
 
-    const user: UserContextType = useContext(UserContext);
+    const userContext: UserContextType = useContext(UserContext);
+
+    const buttons: IButton[] = [
+        { text: t("all.Home"), href: "/" }
+    ];
 
     return (
         <header className="h-header">
             <nav>
                 <ul>
-
-                </ul>
-
-                {user ? (
-                    <Button
-                        aria-label={t("auth.MyProfile")}
-                        className=""
-                        href={`/users/${user?.id}`}
-                    >
-                        <img aria-hidden="true" src="https://loremflickr.com/800/800"/>
-                        <div className="">
+                    {buttons.map((i: IButton): React.ReactNode => (
+                        <Button key={i.href} href={i.href}>
                             <Typography>
-                                {user.firstName}
+                                {i.text}
                             </Typography>
-                        </div>
-                    </Button>
-                ) : (
-                    <Skeleton/>
-                )}
+                        </Button>
+                    ))}
+                </ul>
             </nav>
         </header>
     );

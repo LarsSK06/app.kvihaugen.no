@@ -6,12 +6,19 @@
 
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
 import { IParentProps } from "../types";
+import { UserContext } from "../contexts";
+import { useState } from "react";
+import { IPublicUser } from "../types/users";
+import Header from "../components/Header";
 
 
 
 // Component
 
 export default ({ children }: IParentProps): React.ReactNode => {
+
+    const [token, setToken] = useState<string | null>(null);
+    const [user, setUser] = useState<IPublicUser | null>(null);
 
     const theme: Theme = createTheme({
         cssVariables: true,
@@ -33,7 +40,10 @@ export default ({ children }: IParentProps): React.ReactNode => {
 
     return (
         <ThemeProvider theme={theme}>
-            {children}
+            <UserContext.Provider value={{ user, setUser }}>
+                <Header/>
+                {children}
+            </UserContext.Provider>
         </ThemeProvider>
     );
 };

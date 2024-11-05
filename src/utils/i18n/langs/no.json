@@ -1,56 +1,21 @@
 {
     "all": {
-        "Id": "Id",
         "Home": "Hjem",
-        "Users": "Brukere",
-        "Email": "E-post",
-        "Password": "Passord",
-        "Ok": "Ok",
-        "Accept": "Godkjenn",
-        "Cancel": "Avbryt",
-        "Decline": "Avvis",
-        "Name": "Navn",
         "FirstName": "Fornavn",
         "LastName": "Etternavn",
-        "Edit": "Rediger",
-        "Delete": "Slett",
-        "Actions": "Handlinger",
-        "Documents": "Dokumenter",
-        "Search": "Søk",
         "Gender": "Kjønn",
         "Male": "Mann",
         "Female": "Kvinne",
         "Other": "Annet",
-        "Undefined": "Udefinert"
+        "Undefined": "Undefinert",
+        "Email": "Epost-adresse",
+        "Password": "Passord"
     },
     "auth": {
-        "MyProfile": "Min profil",
-        "SignIn": "Logg inn",
-        "SignUp": "Lag bruker",
-        "StaySignedIn": "Forbli logget inn",
-        "SwitchToSignUp": "Har du ikke bruker? Lag en her!",
-        "SwitchToSignIn": "Har du allerede en bruker? Logg inn her!"
+        "SignUp": "Opprett bruker"
     },
-    "confirmations": {
-        "AreYouSure": "Er du sikker?",
-        "AreYouReallySure": "Er du helt sikker på at du ønsker å utføre denne handlingen?",
-        "YouAreAboutToDeleteUser": "Du er i ferd med å slette en bruker! Er du sikker?"
+    "messages": {
+        "ConfirmationSentToAdmin": "Bekreftelse er sendt til administrator!"
     },
-    "errors": {
-        "Error": "Feil",
-        "AnErrorOccured": "En feil oppstod",
-        "SystemHasABadDay": "Det ser ut til at systemet har en dårlig dag",
-        "SeeDetailedError": "Vis feilen i detalj",
-        "HideDetailedError": "Skjul feilen i detalj",
-        "CouldNotGetAnyResults": "Kunne ikke finne noen resultater"
-    },
-    "users": {
-        "EditUser": "Rediger bruker"
-    },
-    "documents": {
-        "ChooseADocument": "Velg et dokument"
-    },
-    "$": {
-        "TypeError: Failed to fetch": "Kunne ikke kontakte server! Kontakt domene- eller systemadministrator, og vis til feilmelding."
-    }
+    "$": {}
 }

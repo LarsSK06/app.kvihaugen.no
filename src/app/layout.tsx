@@ -1,8 +1,8 @@
 // Imports
 
-import ThemeProfileProvider from "@/utils/components/ThemeProfileProvider";
-
 import { IParentProps } from "@/utils/types";
+
+import Root from "@/utils/layouts/Root";
 
 import "@/utils/styles/globals.css";
 
@@ -13,9 +13,9 @@ import "@/utils/styles/globals.css";
 export default async ({ children }: IParentProps): Promise<React.ReactNode> => (
     <html lang="en">
         <body className="bg-color-1">
-            <ThemeProfileProvider>
+            <Root>
                 {children}
-            </ThemeProfileProvider>
+            </Root>
         </body>
     </html>
 );
