@@ -17,7 +17,8 @@
         "nanoid": "^5.0.7",
         "next": "^15.0.2",
         "react": "^18",
-        "react-dom": "^18"
+        "react-dom": "^18",
+        "redux": "^5.0.1"
     },
     "devDependencies": {
         "@types/classnames": "^2.3.0",

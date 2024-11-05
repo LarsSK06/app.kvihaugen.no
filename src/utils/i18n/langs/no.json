@@ -24,6 +24,7 @@
         "Undefined": "Udefinert"
     },
     "auth": {
+        "MyProfile": "Min profil",
         "SignIn": "Logg inn",
         "SignUp": "Lag bruker",
         "StaySignedIn": "Forbli logget inn",
