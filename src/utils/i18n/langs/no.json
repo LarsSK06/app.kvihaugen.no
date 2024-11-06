@@ -12,7 +12,8 @@
         "Password": "Passord"
     },
     "auth": {
-        "SignUp": "Opprett bruker"
+        "SignUp": "Opprett bruker",
+        "SignIn": "Logg inn"
     },
     "messages": {
         "ConfirmationSentToAdmin": "Bekreftelse er sendt til administrator!"

@@ -40,7 +40,8 @@ export enum Endpoint{
     Auth = "auth",
     SignIn = "sign-in",
     SignUp = "sign-up",
-    Users = "users"
+    Users = "users",
+    Me = "@me"
 }
 
 

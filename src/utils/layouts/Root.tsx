@@ -6,9 +6,10 @@
 
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
 import { IParentProps } from "../types";
-import { UserContext } from "../contexts";
 import { useState } from "react";
-import { IPublicUser } from "../types/users";
+import { IPassport } from "../types/auth";
+import { PassportContext } from "../contexts";
+
 import Header from "../components/Header";
 
 
@@ -17,8 +18,7 @@ import Header from "../components/Header";
 
 export default ({ children }: IParentProps): React.ReactNode => {
 
-    const [token, setToken] = useState<string | null>(null);
-    const [user, setUser] = useState<IPublicUser | null>(null);
+    const [passport, setPassport] = useState<IPassport | null>(null);
 
     const theme: Theme = createTheme({
         cssVariables: true,
@@ -40,10 +40,10 @@ export default ({ children }: IParentProps): React.ReactNode => {
 
     return (
         <ThemeProvider theme={theme}>
-            <UserContext.Provider value={{ user, setUser }}>
+            <PassportContext.Provider value={{ passport, setPassport }}>
                 <Header/>
                 {children}
-            </UserContext.Provider>
+            </PassportContext.Provider>
         </ThemeProvider>
     );
 };

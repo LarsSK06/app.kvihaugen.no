@@ -6,8 +6,8 @@
 
 import HorizontalRule from "@/utils/components/HorizontalRule";
 import Poster from "@/utils/components/Poster";
+import { PassportContext, PassportContextType } from "@/utils/contexts";
 
-import { UserContext, UserContextType } from "@/utils/contexts";
 import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
@@ -24,30 +24,32 @@ import { useContext, useEffect, useState } from "react";
 
 export default (): React.ReactNode => {
 
-    const userContext: UserContextType = useContext(UserContext);
+    const passportContext: PassportContextType = useContext<PassportContextType>(PassportContext);
 
     const router: AppRouterInstance = useRouter();
 
-    if(userContext.user){
-        router.back();
+    if(passportContext.passport){
+        router.push("/");
 
         return <></>;
     }
 
-    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-
-    const [requestOk, setRequestOk] = useState<boolean>(false);
+    const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-
     const [payload, setPayload] = useState<ISignUpData | null>(null);
 
     const { loading, call } = useFetch<IPassport, ISignUpData>({
         endpoint: [Endpoint.Auth, Endpoint.SignIn],
         method: HTTPMethod.POST,
         body: payload ?? undefined,
-        onSuccess: (): void => setRequestOk(true),
+        onSuccess: (value: IPassport): void => {
+            if(passportContext.setPassport)
+                passportContext.setPassport(value);
+
+            router.refresh();
+        },
         onError: (value: string): void => {
-            if(error === value) setShowErrorModal(true);
+            if(error === value) setShowErrorMessage(true);
             else setError(value);
         }
     });
@@ -55,6 +57,10 @@ export default (): React.ReactNode => {
     useEffect((): void => {
         if(payload) call();
     }, [payload]);
+
+    useEffect((): void => {
+        if(error) setShowErrorMessage(true);
+    }, [error]);
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>): void{
         event.preventDefault();
@@ -64,7 +70,7 @@ export default (): React.ReactNode => {
 
     return (
         <Poster>
-            <form onSubmit={onSubmit} className="box flex flex-col gap-4">
+            <form onSubmit={onSubmit} className="w-96 box flex flex-col gap-4">
                 <Typography variant="h1">
                     {t("auth.SignIn")}
                 </Typography>
@@ -77,54 +83,8 @@ export default (): React.ReactNode => {
 
                 <HorizontalRule/>
 
-                <div className="flex gap-4">
-                    <TextField
-                        id="firstName"
-                        name="firstName"
-                        variant="filled"
-                        label={t("all.FirstName")}
-                        placeholder={t("all.FirstName")}
-                        disabled={loading}
-                    />
-                    <TextField
-                        id="lastName"
-                        name="lastName"
-                        variant="filled"
-                        label={t("all.LastName")}
-                        placeholder={t("all.LastName")}
-                        disabled={loading}
-                    />
-                </div>
-
-                <FormControl>
-                    <InputLabel variant="filled">
-                        {t("all.Gender")}
-                    </InputLabel>
-                    <Select
-                        id="gender"
-                        name="gender"
-                        label={t("all.Gender")}
-                        placeholder={t("all.Gender")}
-                        variant="filled"
-                        defaultValue={Gender.Male}
-                        disabled={loading}
-                    >
-                        <MenuItem value={Gender.Male}>
-                            {t("all.Male")}
-                        </MenuItem>
-                        <MenuItem value={Gender.Female}>
-                            {t("all.Female")}
-                        </MenuItem>
-                        <MenuItem value={Gender.Other}>
-                            {t("all.Other")}
-                        </MenuItem>
-                        <MenuItem value={Gender.Undefined}>
-                            {t("all.Undefined")}
-                        </MenuItem>
-                    </Select>
-                </FormControl>
-
                 <TextField
+                    required
                     id="email"
                     name="email"
                     variant="filled"
@@ -135,6 +95,7 @@ export default (): React.ReactNode => {
                 />
 
                 <TextField
+                    required
                     id="password"
                     name="password"
                     variant="filled"
@@ -144,12 +105,18 @@ export default (): React.ReactNode => {
                     disabled={loading}
                 />
 
+                {showErrorMessage && (
+                    <Typography color="red">
+                        {error}
+                    </Typography>
+                )}
+
                 <Button
                     variant="outlined"
                     type="submit"
                     disabled={loading}
                 >
-                    {t("auth.SignUp")}
+                    {t("auth.SignIn")}
                 </Button>
             </form>
         </Poster>
