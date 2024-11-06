@@ -5,10 +5,11 @@
 // Imports
 
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
-import { IParentProps } from "../types";
-import { useState } from "react";
-import { IPassport } from "../types/auth";
-import { PassportContext } from "../contexts";
+import { Endpoint, IParentProps } from "../types";
+import { useEffect, useState } from "react";
+import { IPublicUser } from "../types/users";
+import { UserContext } from "../contexts";
+import { useFetch } from "../hooks/use-fetch";
 
 import Header from "../components/Header";
 
@@ -18,12 +19,22 @@ import Header from "../components/Header";
 
 export default ({ children }: IParentProps): React.ReactNode => {
 
-    const [passport, setPassport] = useState<IPassport | null>(null);
+    const [user, setUser] = useState<IPublicUser | null>(null);
+
+    const { call: fetchUser } = useFetch<IPublicUser>({
+        endpoint: [Endpoint.Users, Endpoint.Me],
+        onSuccess: setUser,
+        onError: (): void => {}
+    });
+
+    useEffect((): void => {
+        fetchUser();
+    }, []);
 
     const theme: Theme = createTheme({
         cssVariables: true,
         typography: {
-            h1: { fontSize: "4rem" }
+            h1: { fontSize: "3rem" }
         },
         palette: {
             primary: {
@@ -40,10 +51,10 @@ export default ({ children }: IParentProps): React.ReactNode => {
 
     return (
         <ThemeProvider theme={theme}>
-            <PassportContext.Provider value={{ passport, setPassport }}>
+            <UserContext.Provider value={user}>
                 <Header/>
                 {children}
-            </PassportContext.Provider>
+            </UserContext.Provider>
         </ThemeProvider>
     );
 };

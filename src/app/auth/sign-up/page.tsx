@@ -11,7 +11,7 @@ import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { Endpoint, HTTPMethod } from "@/utils/types";
-import { Gender, IPassport, ISignUpData } from "@/utils/types/auth";
+import { Gender, ISignUpData } from "@/utils/types/auth";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -21,20 +21,18 @@ import { useEffect, useState } from "react";
 
 export default (): React.ReactNode => {
 
-    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-
+    const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [requestOk, setRequestOk] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-
     const [payload, setPayload] = useState<ISignUpData | null>(null);
 
-    const { loading, call } = useFetch<IPassport, ISignUpData>({
+    const { loading, call } = useFetch<undefined, ISignUpData>({
         endpoint: [Endpoint.Auth, Endpoint.SignUp],
         method: HTTPMethod.POST,
         body: payload ?? undefined,
         onSuccess: (): void => setRequestOk(true),
         onError: (value: string): void => {
-            if(error === value) setShowErrorModal(true);
+            if(error === value) setShowErrorMessage(true);
             else setError(value);
         }
     });
@@ -135,6 +133,12 @@ export default (): React.ReactNode => {
                         type="password"
                         disabled={loading}
                     />
+
+                    {showErrorMessage && (
+                        <Typography color="red">
+                            {error}
+                        </Typography>
+                    )}
 
                     <Button
                         variant="outlined"

@@ -38,17 +38,24 @@
             justify-center
             items-center;
 
-        backdrop-filter: blur(5px);
+        backdrop-filter:
+            brightness(90%)
+            blur(5px);
     }
 }
 
 @layer utilities{
-    .box{
+    .box-no-padding{
         @apply
-            p-4
             border
             border-solid
             border-color-3
             rounded-default;
+    }
+
+    .box{
+        @apply
+            p-4
+            box-no-padding;
     }
 }

@@ -1,21 +1,18 @@
 // Imports
 
-import { useContext, useEffect } from "react";
-import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Button, Typography } from "@mui/material";
 import { t } from "../i18n";
-import { PassportContext, PassportContextType } from "../contexts";
 import { useFetch } from "../hooks/use-fetch";
 import { Endpoint } from "../types";
 import { IPublicUser } from "../types/users";
+import { useAnchorRouting, UseAnchorRoutingFunction } from "../hooks/use-anchor-routing";
 
 
 
 // Types
 
-interface IButton{
-    text: string;
-    href: string;
-}
+type Button = [string, string];
 
 
 
@@ -23,30 +20,27 @@ interface IButton{
 
 export default (): React.ReactNode => {
 
-    const passportContext: PassportContextType =
-        useContext<PassportContextType>(PassportContext);
+    const [user, setUser] = useState<IPublicUser | null>(null);
 
-    const buttons: IButton[] = [
-        { text: t("all.Home"), href: "/" }
-    ].concat(
-        passportContext.passport
-            ? []
-            : { text: t("auth.SignIn"), href: "/auth/sign-in" }
-    );
+    const route: UseAnchorRoutingFunction = useAnchorRouting();
+
+    const buttons: Button[] = [
+        [t("all.Home"), "/"],
+        [t("all.Users"), "/users"],
+        user ? [user.firstName, "/users/@me"] : [t("auth.SignIn"), "/auth/sign-in"]
+    ];
 
     const {
         loading: isUserLoading,
         call: fetchUser
     } = useFetch<IPublicUser>({
         endpoint: [Endpoint.Users, Endpoint.Me],
-        onSuccess: (value: IPublicUser): void => {
-            if(passportContext.setPassport && passportContext.passport)
-                passportContext.setPassport({
-                    ...passportContext.passport,
-                    user: value
-                });
-        },
-        onError: (): void => {}
+        onSuccess: setUser,
+        onError: (): void => {
+            setUser(null);
+            
+            window.localStorage.removeItem("token");
+        }
     });
 
     useEffect((): void => {
@@ -57,31 +51,19 @@ export default (): React.ReactNode => {
         <header className="h-header">
             <nav className="w-main max-w-full h-full px-4 mx-auto">
                 <ul className="h-full flex items-center gap-4">
-                    {buttons.map((i: IButton): React.ReactNode => (
-                        <li className="h-fit" key={i.href}>
-                            <Button href={i.href}>
-                                <Typography>
-                                    {i.text}
-                                </Typography>
-                            </Button>
-                        </li>
-                    ))}
-                    {passportContext.passport?.user && (
-                        <li>
-                            {isUserLoading ? (
-                                <Skeleton/>
-                            ) : (
-                                <Button href="/users/@me">
-                                    <img src="https://loremflickr.com/800/800"/>
-                                    <div>
-                                        <Typography>
-                                            {passportContext.passport.user.firstName}
-                                        </Typography>
-                                    </div>
+                    {buttons.map((i: Button): React.ReactNode => {
+                        const [text, href] = i;
+
+                        return (
+                            <li key={href}>
+                                <Button href={href} onClick={route}>
+                                    <Typography>
+                                        {text}
+                                    </Typography>
                                 </Button>
-                            )}
-                        </li>
-                    )}
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         </header>

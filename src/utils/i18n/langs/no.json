@@ -1,6 +1,8 @@
 {
     "all": {
+        "Id": "Id",
         "Home": "Hjem",
+        "Name": "Navn",
         "FirstName": "Fornavn",
         "LastName": "Etternavn",
         "Gender": "Kjønn",
@@ -9,11 +11,28 @@
         "Other": "Annet",
         "Undefined": "Undefinert",
         "Email": "Epost-adresse",
-        "Password": "Passord"
+        "Password": "Passord",
+        "Actions": "Handlinger",
+        "Breadcrumb": "Smulenavigasjon",
+        "Users": "Brukere",
+        "Open": "Åpne",
+        "View": "Vis",
+        "Edit": "Rediger",
+        "Delete": "Slett",
+        "Administrator": "Administrator",
+        "Active": "Aktiv",
+        "Yes": "Ja",
+        "No": "Nei",
+        "Cancel": "Avbryt",
+        "Accept": "Akseptér"
     },
     "auth": {
         "SignUp": "Opprett bruker",
         "SignIn": "Logg inn"
+    },
+    "labels": {
+        "CloseModal": "Lukk modal",
+        "EditUser": "Rediger bruker"
     },
     "messages": {
         "ConfirmationSentToAdmin": "Bekreftelse er sendt til administrator!"

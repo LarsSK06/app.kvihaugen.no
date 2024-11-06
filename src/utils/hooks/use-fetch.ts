@@ -8,12 +8,6 @@ import { t } from "@/utils/i18n";
 
 // Types
 
-type URLSection =
-    | string
-    | number
-    | undefined
-    | null;
-
 export interface IUseFetchOutput{
     loading: boolean;
     call: () => Promise<void>;
@@ -24,7 +18,7 @@ export interface IUseFetchInput<Receive, Send>{
     method?: HTTPMethod;
     body?: Send;
     onSuccess: (value: Receive) => void;
-    onError: (error: string) => void;
+    onError: (error: string, code: number) => void;
 }
 
 
@@ -77,6 +71,13 @@ export function useFetch<Receive, Send = undefined>({
                     )
                 });
             
+            //if(response.status == 401){
+            //    window.localStorage.removeItem("token");
+            //    window.location.href = "/auth/sign-in";
+
+            //    return;
+            //}
+            
             const contentType: string = response.headers.get("Content-Type") ?? "";
             const json: boolean =
                 contentType == "application/json; charset=utf-8" ||
@@ -89,11 +90,11 @@ export function useFetch<Receive, Send = undefined>({
             else if(json){
                 const parse: { title?: string; } = await response.json();
 
-                onError(t(parse.title ?? "errors.SystemHasABadDay"));
+                onError(t(parse.title ?? "errors.SystemHasABadDay"), response.status);
             }
-            else onError(t(await response.text()));
+            else onError(t(await response.text()), response.status);
         }
-        catch(error){ onError(t(`${error}`)); }
+        catch(error){ onError(t(`${error}`), 500); }
 
         setLoading(false);
     }

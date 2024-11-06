@@ -33,7 +33,7 @@ export enum HTTPContentType{
 
 export enum BackendAddress{
     Dev = "http://localhost:4000",
-    Prod = "http://server.local:4000"
+    Prod = "http://api.app.kvihaugen.no"
 }
 
 export enum Endpoint{

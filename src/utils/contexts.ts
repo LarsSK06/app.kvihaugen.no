@@ -1,20 +1,17 @@
 // Imports
 
-import { createContext, Context } from "react";
-import { IPassport } from "./types/auth";
+import { Context, createContext } from "react";
+import { IPublicUser } from "./types/users";
 
 
 
 // Types
 
-export type PassportContextType = {
-    passport: IPassport | null;
-    setPassport: ((value: IPassport | null) => void) | null;
-};
+export type UserContextType = IPublicUser | null;
 
 
 
 // Contexts
 
-export const PassportContext: Context<PassportContextType>
-    = createContext<PassportContextType>({ passport: null, setPassport: null });
+export const UserContext: Context<UserContext> =
+    createContext<UserContext>(null);
