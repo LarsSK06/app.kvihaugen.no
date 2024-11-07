@@ -6,10 +6,10 @@
 
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
 import { Endpoint, IParentProps } from "../types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IPublicUser } from "../types/users";
-import { UserContext } from "../contexts";
 import { useFetch } from "../hooks/use-fetch";
+import { useUserStore } from "../zustand";
 
 import Header from "../components/Header";
 
@@ -19,8 +19,7 @@ import Header from "../components/Header";
 
 export default ({ children }: IParentProps): React.ReactNode => {
 
-    const [user, setUser] = useState<IPublicUser | null>(null);
-
+    const { put: setUser } = useUserStore();
     const { call: fetchUser } = useFetch<IPublicUser>({
         endpoint: [Endpoint.Users, Endpoint.Me],
         onSuccess: setUser,
@@ -51,10 +50,8 @@ export default ({ children }: IParentProps): React.ReactNode => {
 
     return (
         <ThemeProvider theme={theme}>
-            <UserContext.Provider value={user}>
-                <Header/>
-                {children}
-            </UserContext.Provider>
+            <Header/>
+            {children}
         </ThemeProvider>
     );
 };

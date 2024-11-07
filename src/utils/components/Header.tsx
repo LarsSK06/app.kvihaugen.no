@@ -1,12 +1,9 @@
 // Imports
 
-import { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { t } from "../i18n";
-import { useFetch } from "../hooks/use-fetch";
-import { Endpoint } from "../types";
-import { IPublicUser } from "../types/users";
 import { useAnchorRouting, UseAnchorRoutingFunction } from "../hooks/use-anchor-routing";
+import { useUserStore } from "../zustand";
 
 
 
@@ -20,7 +17,7 @@ type Button = [string, string];
 
 export default (): React.ReactNode => {
 
-    const [user, setUser] = useState<IPublicUser | null>(null);
+    const { user } = useUserStore();
 
     const route: UseAnchorRoutingFunction = useAnchorRouting();
 
@@ -29,23 +26,6 @@ export default (): React.ReactNode => {
         [t("all.Users"), "/users"],
         user ? [user.firstName, "/users/@me"] : [t("auth.SignIn"), "/auth/sign-in"]
     ];
-
-    const {
-        loading: isUserLoading,
-        call: fetchUser
-    } = useFetch<IPublicUser>({
-        endpoint: [Endpoint.Users, Endpoint.Me],
-        onSuccess: setUser,
-        onError: (): void => {
-            setUser(null);
-            
-            window.localStorage.removeItem("token");
-        }
-    });
-
-    useEffect((): void => {
-        fetchUser();
-    }, []);
 
     return (
         <header className="h-header">

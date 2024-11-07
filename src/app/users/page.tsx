@@ -4,14 +4,13 @@
 
 // Imports
 
-import { UserContext, UserContextType } from "@/utils/contexts";
 import { useAnchorRouting, UseAnchorRoutingFunction } from "@/utils/hooks/use-anchor-routing";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { Endpoint, HTTPMethod } from "@/utils/types";
 import { IHardMutableUser, IPublicUser } from "@/utils/types/users";
 import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Row from "./components/Row";
 import GenericModal from "@/utils/components/GenericModal";
@@ -31,7 +30,6 @@ export default (): React.ReactNode => {
     const [showEditUserModal, setShowEditUserModal] = useState<boolean>(false);
     const [showDeleteUserModal, setShowDeleteUserModal] = useState<boolean>(false);
 
-    const user: UserContextType = useContext<UserContextType>(UserContext);
     const route: UseAnchorRoutingFunction = useAnchorRouting();
 
     const [users, setUsers] = useState<IPublicUser[] | null>(null);

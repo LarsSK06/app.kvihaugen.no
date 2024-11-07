@@ -11,7 +11,8 @@ import { formDataToJSON } from "@/utils/functions";
 import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { Endpoint, HTTPMethod } from "@/utils/types";
-import { ISignUpData } from "@/utils/types/auth";
+import { ISignInData } from "@/utils/types/auth";
+import { useTokenStore } from "@/utils/zustand";
 import { Button, TextField, Typography } from "@mui/material";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -25,24 +26,20 @@ export default (): React.ReactNode => {
 
     const router: AppRouterInstance = useRouter();
 
-    //if(window.localStorage.getItem("token") != null){
-    //    window.location.href = "/";
-
-    //    return <></>;
-    //}
+    const { put: setToken } = useTokenStore();
 
     const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [payload, setPayload] = useState<ISignUpData | null>(null);
+    const [data, setData] = useState<ISignInData | null>(null);
 
-    const { loading, call } = useFetch<string, ISignUpData>({
+    const { loading, call } = useFetch<string, ISignInData>({
         endpoint: [Endpoint.Auth, Endpoint.SignIn],
         method: HTTPMethod.POST,
-        body: payload ?? undefined,
+        body: data ?? undefined,
         onSuccess: (value: string): void => {
-            window.localStorage.setItem("token", value);
+            setToken(value);
 
-            router.refresh();
+            router.replace("/");
         },
         onError: (value: string): void => {
             if(error === value) setShowErrorMessage(true);
@@ -51,8 +48,8 @@ export default (): React.ReactNode => {
     });
 
     useEffect((): void => {
-        if(payload) call();
-    }, [payload]);
+        if(data) call();
+    }, [data]);
 
     useEffect((): void => {
         if(error) setShowErrorMessage(true);
@@ -61,7 +58,7 @@ export default (): React.ReactNode => {
     function onSubmit(event: React.FormEvent<HTMLFormElement>): void{
         event.preventDefault();
 
-        setPayload(formDataToJSON(new FormData(event.currentTarget)));
+        setData(formDataToJSON<ISignInData>(new FormData(event.currentTarget)));
     }
 
     return (

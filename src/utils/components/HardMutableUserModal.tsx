@@ -2,12 +2,11 @@
 
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { t } from "../i18n";
-import { IHardMutableUser, IPublicUser } from "../types/users";
-
-import GenericModal from "./GenericModal";
+import { IHardMutableUser } from "../types/users";
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { Gender } from "../types/auth";
-import { formDataToJSON } from "../functions";
+
+import GenericModal from "./GenericModal";
 
 
 

@@ -12,6 +12,7 @@ import "@/utils/styles/globals.css";
 
 export default async ({ children }: IParentProps): Promise<React.ReactNode> => (
     <html lang="en">
+        <head></head>
         <body className="bg-color-1">
             <Root>
                 {children}
