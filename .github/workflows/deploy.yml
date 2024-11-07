@@ -1,0 +1,21 @@
+name: app.kvihaugen.no
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Deploy to Web Server
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+      run: |
+        ssh $USERNAME@$HOST "cd ./GitHub/app.kvihaugen.no && git pull origin main && bash ./.scripts/prod_start.sh"

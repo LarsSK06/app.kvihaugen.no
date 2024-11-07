@@ -1,0 +1,61 @@
+/* Tailwind CSS */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* Layers */
+
+@layer base{
+    :root{
+        --width-main: 64rem;
+        --width-vp: 100vw;
+
+        --height-header: calc(6rem - 1px);
+        --height-torso: calc(100vh - var(--height-header));
+        --height-vp: 100vh;
+
+        --color-1: #020617;
+        --color-2: #0f172a;
+        --color-3: #1e293b;
+        --color-4: #fff;
+        --color-accent: #4338ca;
+        --color-danger: #dc2626;
+        --color-warn: #facc15;
+        --color-safe: #16a34a;
+        --color-glass: rgba(255, 255, 255, .03);
+
+        --line-height-fit: normal;
+
+        --border-radius-default: 4px;
+    }
+
+    ::backdrop{
+        @apply
+            flex
+            justify-center
+            items-center;
+
+        backdrop-filter:
+            brightness(90%)
+            blur(5px);
+    }
+}
+
+@layer utilities{
+    .box-no-padding{
+        @apply
+            border
+            border-solid
+            border-color-3
+            rounded-default;
+    }
+
+    .box{
+        @apply
+            p-4
+            box-no-padding;
+    }
+}
