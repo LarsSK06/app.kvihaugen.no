@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { BackendAddress, HTTPMethod } from "../types";
 import { t } from "@/utils/i18n";
-import { useTokenStore, useUserStore } from "../zustand";
 
 
 
@@ -36,9 +35,6 @@ export function useFetch<Receive, Send = undefined>({
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { token, delete: removeToken } = useTokenStore();
-    const { delete: removeUser } = useUserStore();
-
     const address: string =
         [
             process.env.NODE_ENV == "production"
@@ -54,6 +50,9 @@ export function useFetch<Receive, Send = undefined>({
 
     async function call(): Promise<void>{
         setLoading(true);
+
+        const token: string | null =
+            window.localStorage.getItem("token");
 
         try{
             const response: globalThis.Response =
@@ -72,10 +71,8 @@ export function useFetch<Receive, Send = undefined>({
                     )
                 });
             
-            if(response.status == 401){
-                removeToken();
-                removeUser();
-            }
+            if(response.status == 401)
+                window.localStorage.removeItem("token");
             
             const contentType: string = response.headers.get("Content-Type") ?? "";
             const json: boolean =

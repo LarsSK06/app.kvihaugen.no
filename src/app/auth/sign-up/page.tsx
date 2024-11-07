@@ -13,6 +13,8 @@ import { t } from "@/utils/i18n";
 import { Endpoint, HTTPMethod } from "@/utils/types";
 import { Gender, ISignUpData } from "@/utils/types/auth";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -20,6 +22,8 @@ import { useEffect, useState } from "react";
 // Component
 
 export default (): React.ReactNode => {
+
+    const router: AppRouterInstance = useRouter();
 
     const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [requestOk, setRequestOk] = useState<boolean>(false);
@@ -36,6 +40,11 @@ export default (): React.ReactNode => {
             else setError(value);
         }
     });
+
+    useEffect((): void => {
+        if(window.localStorage.getItem("token"))
+            router.push("/");
+    }, []);
 
     useEffect((): void => {
         if(payload) call();

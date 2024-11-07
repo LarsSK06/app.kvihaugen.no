@@ -3,7 +3,6 @@
 import { Button, Typography } from "@mui/material";
 import { t } from "../i18n";
 import { useAnchorRouting, UseAnchorRoutingFunction } from "../hooks/use-anchor-routing";
-import { useUserStore } from "../zustand";
 
 
 
@@ -17,14 +16,12 @@ type Button = [string, string];
 
 export default (): React.ReactNode => {
 
-    const { user } = useUserStore();
-
     const route: UseAnchorRoutingFunction = useAnchorRouting();
 
     const buttons: Button[] = [
         [t("all.Home"), "/"],
         [t("all.Users"), "/users"],
-        user ? [user.firstName, "/users/@me"] : [t("auth.SignIn"), "/auth/sign-in"]
+        //user ? [user.firstName, "/users/@me"] : [t("auth.SignIn"), "/auth/sign-in"]
     ];
 
     return (

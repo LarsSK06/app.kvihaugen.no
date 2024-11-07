@@ -1,5 +1,5 @@
 {
-    "name": "identity.kvihaugen.no",
+    "name": "app.kvihaugen.no",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -18,8 +18,7 @@
         "next": "^15.0.3",
         "react": "^18",
         "react-dom": "^18",
-        "redux": "^5.0.1",
-        "zustand": "^5.0.1"
+        "redux": "^5.0.1"
     },
     "devDependencies": {
         "@types/classnames": "^2.3.0",

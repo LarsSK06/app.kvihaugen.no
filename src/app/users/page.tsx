@@ -153,7 +153,7 @@ export default (): React.ReactNode => {
                                 <Row
                                     key={i.id}
                                     user={i}
-                                    admin={user?.administrator ?? false}
+                                    admin={true}
                                     onEditClick={onEditClick}
                                     onDeleteClick={onDeleteClick}
                                 />

@@ -12,7 +12,6 @@ import { useFetch } from "@/utils/hooks/use-fetch";
 import { t } from "@/utils/i18n";
 import { Endpoint, HTTPMethod } from "@/utils/types";
 import { ISignInData } from "@/utils/types/auth";
-import { useTokenStore } from "@/utils/zustand";
 import { Button, TextField, Typography } from "@mui/material";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -26,8 +25,6 @@ export default (): React.ReactNode => {
 
     const router: AppRouterInstance = useRouter();
 
-    const { put: setToken } = useTokenStore();
-
     const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState<ISignInData | null>(null);
@@ -37,7 +34,7 @@ export default (): React.ReactNode => {
         method: HTTPMethod.POST,
         body: data ?? undefined,
         onSuccess: (value: string): void => {
-            setToken(value);
+            window.localStorage.setItem("token", value);
 
             router.replace("/");
         },
@@ -46,6 +43,11 @@ export default (): React.ReactNode => {
             else setError(value);
         }
     });
+
+    useEffect((): void => {
+        if(window.localStorage.getItem("token"))
+            router.push("/");
+    }, []);
 
     useEffect((): void => {
         if(data) call();
