@@ -43,6 +43,9 @@ export default ({ children }: IParentProps): React.ReactNode => {
                 contrastText: "#fff"
             }
         },
+        shape: {
+            borderRadius: 4
+        },
         defaultColorScheme: "dark"
     });
 

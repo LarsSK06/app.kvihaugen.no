@@ -24,7 +24,8 @@
         "Yes": "Ja",
         "No": "Nei",
         "Cancel": "Avbryt",
-        "Accept": "Akseptér"
+        "Accept": "Akseptér",
+        "Type": "Type"
     },
     "auth": {
         "SignUp": "Opprett bruker",
@@ -32,10 +33,14 @@
     },
     "labels": {
         "CloseModal": "Lukk modal",
-        "EditUser": "Rediger bruker"
+        "EditUser": "Rediger bruker",
+        "ResizeSidebar": "Endre sidemeny-størrelse"
     },
     "messages": {
         "ConfirmationSentToAdmin": "Bekreftelse er sendt til administrator!"
+    },
+    "names": {
+        "IbsenTextEditor": "Ibsen Skriveprogram"
     },
     "$": {}
 }

@@ -44,6 +44,13 @@ export enum Endpoint{
     Me = "@me"
 }
 
+export enum TextType{
+    H1 = "h1",
+    H2 = "h2",
+    H3 = "h3",
+    P = "p"
+}
+
 
 
 // Types

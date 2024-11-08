@@ -21,11 +21,12 @@ export default (): React.ReactNode => {
     const buttons: Button[] = [
         [t("all.Home"), "/"],
         [t("all.Users"), "/users"],
+        [t("names.IbsenTextEditor"), "/ibsen"],
         //user ? [user.firstName, "/users/@me"] : [t("auth.SignIn"), "/auth/sign-in"]
     ];
 
     return (
-        <header className="h-header">
+        <header className="h-header border-b-color-3 border-b border-solid">
             <nav className="w-main max-w-full h-full px-4 mx-auto">
                 <ul className="h-full flex items-center gap-4">
                     {buttons.map((i: Button): React.ReactNode => {
